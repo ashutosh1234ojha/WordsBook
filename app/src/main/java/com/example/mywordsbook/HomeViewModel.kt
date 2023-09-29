@@ -6,10 +6,12 @@ import com.example.mywordsbook.db.WordDao
 import com.example.mywordsbook.db.WordDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 @HiltViewModel
- class HomeViewModel @Inject constructor(wordDatabase: WordDatabase) :
+class HomeViewModel @Inject constructor(wordDatabase: WordDatabase) :
     ViewModel() {
     var dao: WordDao?
 
