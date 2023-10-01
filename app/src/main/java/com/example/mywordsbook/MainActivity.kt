@@ -13,47 +13,47 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mywordsbook.db.WordDatabase
+import androidx.navigation.navArgument
 import com.example.mywordsbook.ui.theme.MyWordsBookTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    lateinit var mViewModel: AddWordViewModel
-    lateinit var homeVM: HomeViewModel
+    lateinit var commonViewModel: CommonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
 
             Column {
-                Host(mViewModel,homeVM)
+                Host(commonViewModel)
             }
 
         }
-        mViewModel = ViewModelProvider(this).get(AddWordViewModel::class.java)
-        homeVM = ViewModelProvider(this).get(HomeViewModel::class.java)
+        commonViewModel = ViewModelProvider(this).get(CommonViewModel::class.java)
     }
 
 
 }
 
 @Composable
-private fun Host(mViewModel: AddWordViewModel,homeVM:HomeViewModel) {
+private fun Host(commonViewModel: CommonViewModel) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "HomeScreen") {
         composable("HomeScreen") {
-            HomeScreen(navController,homeVM)
+            HomeScreen(navController, commonViewModel)
         }
 
-        composable("AddWordScreen") {
-            AddWordScreen(navController,mViewModel)
+        composable(
+            "AddWordScreen"
+        ) {
+            AddWordScreen(navController, commonViewModel)
         }
 
     }

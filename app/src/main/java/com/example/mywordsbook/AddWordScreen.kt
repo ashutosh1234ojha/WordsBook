@@ -1,5 +1,6 @@
 package com.example.mywordsbook
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +22,7 @@ import com.example.mywordsbook.ui.theme.MyWordsBookTheme
 @Composable
 fun AddWordScreen(
     navController: NavHostController,
-    addWordViewModel: AddWordViewModel
+    addWordViewModel: CommonViewModel,
 ) {
 
     Column(
@@ -29,8 +30,16 @@ fun AddWordScreen(
             .fillMaxSize()
             .padding(10.dp)
     ) {
-        var word by rememberSaveable { mutableStateOf("") }
-        var meaning by rememberSaveable { mutableStateOf("") }
+        var word by rememberSaveable {
+            mutableStateOf(
+                addWordViewModel.selectedWord?.wording ?: ""
+            )
+        }
+        var meaning by rememberSaveable {
+            mutableStateOf(
+                addWordViewModel.selectedWord?.wording ?: ""
+            )
+        }
         OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = word, onValueChange = {
             word = it
         }, label = { Text(text = "Enter word") }
