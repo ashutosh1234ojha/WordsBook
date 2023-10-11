@@ -37,7 +37,7 @@ fun AddWordScreen(
         }
         var meaning by rememberSaveable {
             mutableStateOf(
-                addWordViewModel.selectedWord?.wording ?: ""
+                addWordViewModel.selectedWord?.meaning ?: ""
             )
         }
         OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = word, onValueChange = {

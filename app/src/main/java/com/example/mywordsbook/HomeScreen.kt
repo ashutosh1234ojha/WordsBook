@@ -2,6 +2,7 @@ package com.example.mywordsbook
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -25,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mywordsbook.db.Word
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun HomeScreen(
@@ -71,14 +76,23 @@ fun ItemList(item: Word, onClick: (id: Int) -> Unit) {
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp))
             .background(Color(0xFFADDFAD))
-            .padding(10.dp)
-            .clickable {
-                onClick(item.id)
-            },
+            .padding(10.dp),
 
         ) {
         Text(text = item.wording, fontSize = 18.sp, color = Color.Black)
 
+        Icon(
+            Icons.Default.Create,
+            contentDescription = "",
+            Modifier
+                .align(Alignment.End)
+                .clickable {
+                    onClick(item.id)
+
+                },
+
+
+            )
         Text(text = item.meaning, fontSize = 16.sp, color = Color.DarkGray)
 
 
