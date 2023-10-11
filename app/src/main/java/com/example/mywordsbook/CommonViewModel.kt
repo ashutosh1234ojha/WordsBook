@@ -41,9 +41,21 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) :
                     dao?.addWord(this)
                 }
 
+                selectedWord = null
+
 
             }
 
         }
+    }
+
+    fun deleteWord() {
+        viewModelScope.launch(Dispatchers.IO) {
+            dao?.deleteWordId(selectedWord!!.id)
+            selectedWord = null
+
+        }
+
+
     }
 }

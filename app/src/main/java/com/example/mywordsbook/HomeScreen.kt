@@ -41,7 +41,6 @@ fun HomeScreen(
 
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(list) { item ->
-
                 ItemList(item) { selectedId ->
                     homeViewModel._setSelectedWord(item)
                     navController.navigate("AddWordScreen")

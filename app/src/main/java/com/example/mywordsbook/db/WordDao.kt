@@ -1,10 +1,7 @@
 package com.example.mywordsbook.db
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
@@ -18,6 +15,9 @@ interface WordDao {
 
     @Query("SELECT * FROM Word")
     fun fetchAllTasks(): Flow<List<Word>>
+
+    @Query("DELETE FROM word WHERE id = :id")
+    fun deleteWordId(id: Int)
 //
 //    @Query("SELECT * FROM Word WHERE id=:id")
 //    fun getWordWithId(id: Int): Flow<Word>
