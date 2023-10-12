@@ -8,6 +8,7 @@ import com.example.mywordsbook.db.WordDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,11 +23,16 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) :
         dao = wordDatabase.wordDao()
     }
 
-    fun getSavedWords(): Flow<List<Word>> {
-        return dao?.fetchAllTasks()!!
+    fun getSavedWords(isShuffled:Boolean): Flow<List<Word>> {
+        if (isShuffled) {
+            return dao?.fetchAllTasks()!!.map { it.shuffled() }
+        } else {
+            return dao?.fetchAllTasks()!!
+
+        }
     }
 
-    fun _setSelectedWord(word: Word) {
+    fun _setSelectedWord(word: Word?) {
         selectedWord = word
     }
 
@@ -40,10 +46,6 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) :
                     wording = _word
                     dao?.addWord(this)
                 }
-
-                selectedWord = null
-
-
             }
 
         }
@@ -52,10 +54,9 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) :
     fun deleteWord() {
         viewModelScope.launch(Dispatchers.IO) {
             dao?.deleteWordId(selectedWord!!.id)
-            selectedWord = null
-
         }
 
 
     }
+
 }

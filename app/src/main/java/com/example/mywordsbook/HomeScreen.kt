@@ -36,7 +36,7 @@ fun HomeScreen(
     navController: NavHostController,
     homeViewModel: CommonViewModel
 ) {
-    val list by homeViewModel.getSavedWords().collectAsState(arrayListOf())
+    val list by homeViewModel.getSavedWords(true).collectAsState(arrayListOf())
     Column(modifier = Modifier.padding(5.dp)) {
 
         LazyColumn(modifier = Modifier.weight(1f)) {
@@ -56,6 +56,7 @@ fun HomeScreen(
         ) {
             FloatingActionButton(
                 onClick = {
+                    homeViewModel._setSelectedWord(null)
                     navController.navigate("AddWordScreen")
 
                 },
