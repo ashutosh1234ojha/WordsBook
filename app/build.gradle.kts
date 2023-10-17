@@ -97,4 +97,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 
+    implementation ("androidx.compose.runtime:runtime-livedata:$compose_version")
+
+
 }

@@ -21,6 +21,7 @@ object RepositoryModule {
             WordDatabase::class.java,
             "words_database"
         ).fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
             .build()
     }
 }
