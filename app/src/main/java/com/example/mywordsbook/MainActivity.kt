@@ -53,22 +53,22 @@ class MainActivity : ComponentActivity() {
             val list =
                 listOf(
                     BottomNavigationItem(
-                        "HomeScreen",
+                        "Home",
                         Icons.Filled.Home,
                         Icons.Outlined.Home,
                         "HomeScreen"
                     ),
                     BottomNavigationItem(
-                        "AddWordScreen",
+                        "Quiz",
                         Icons.Filled.Menu,
                         Icons.Outlined.Menu,
-                        "AddWordScreen"
+                        "QuizScreen"
                     ),
                     BottomNavigationItem(
                         "Setting",
                         Icons.Filled.Settings,
                         Icons.Outlined.Settings,
-                        "Setting"
+                        "SettingScreen"
                     )
                 )
             var selectedItemIndex by rememberSaveable {
@@ -123,10 +123,17 @@ private fun Host(commonViewModel: CommonViewModel, navController: NavHostControl
         }
 
         composable(
-            "AddWordScreen"
+            "QuizScreen"
         ) {
-            AddWordScreen(navController, commonViewModel)
+            QuizScreen(navController, commonViewModel)
         }
+
+        composable(
+            "SettingScreen"
+        ) {
+            SettingScreen(navController, commonViewModel)
+        }
+
 
     }
 }

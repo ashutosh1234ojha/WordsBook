@@ -76,6 +76,13 @@ fun HomeScreen(
                             .height(24.dp)
                     )
                 }
+                IconButton(onClick = {
+                    homeViewModel._setSelectedWord(null)
+                    navController.navigate("AddWordScreen")
+                }) {
+                    Icon(Icons.Filled.Add, "Floating action button.")
+
+                }
             }
         )
         LazyColumn(modifier = Modifier.weight(1f)) {
@@ -89,20 +96,20 @@ fun HomeScreen(
             }
         }
 
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            Alignment.BottomEnd
-        ) {
-            FloatingActionButton(
-                onClick = {
-                    homeViewModel._setSelectedWord(null)
-                    navController.navigate("AddWordScreen")
-
-                },
-            ) {
-                Icon(Icons.Filled.Add, "Floating action button.")
-            }
-        }
+//        Box(
+//            modifier = Modifier.fillMaxWidth(),
+//            Alignment.BottomEnd
+//        ) {
+//            FloatingActionButton(
+//                onClick = {
+//                    homeViewModel._setSelectedWord(null)
+//                    navController.navigate("AddWordScreen")
+//
+//                },
+//            ) {
+//                Icon(Icons.Filled.Add, "Floating action button.")
+//            }
+//        }
 
     }
 }
