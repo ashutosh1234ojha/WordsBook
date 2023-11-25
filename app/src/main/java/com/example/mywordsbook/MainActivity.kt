@@ -85,6 +85,9 @@ class MainActivity : ComponentActivity() {
                                 onClick = {
                                     selectedItemIndex = index
                                     navController.navigate(item.route)
+//                                    if(index==1){
+//                                        commonViewModel.getQuizOptions()
+//                                    }
                                 },
                                 label = { item.title },
                                 icon = {
@@ -132,6 +135,11 @@ private fun Host(commonViewModel: CommonViewModel, navController: NavHostControl
             "SettingScreen"
         ) {
             SettingScreen(navController, commonViewModel)
+        }
+        composable(
+            "AddWordScreen"
+        ) {
+            AddWordScreen(navController, commonViewModel)
         }
 
 

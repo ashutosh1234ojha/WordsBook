@@ -22,8 +22,7 @@ import java.util.Collections
 import javax.inject.Inject
 
 @HiltViewModel
-class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) :
-    ViewModel() {
+class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewModel() {
     var dao: WordDao?
 
     var selectedWord: Word? = null
@@ -32,10 +31,13 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) :
 
     //    var flowWordList by mutableStateOf(emptyList<Word>())
     var list = MutableStateFlow<List<Word>>(emptyList())
+    var quizWordOptions = MutableStateFlow<List<Word>>(emptyList())
 
     init {
         dao = wordDatabase.wordDao()
-       getSavedWords(false)
+        getSavedWords(false)
+        getQuizOptions()
+
     }
 
     fun getSavedWords(isShuffled: Boolean) {
@@ -97,6 +99,17 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) :
             } else {
                 emit(originalList)
             }
+        }
+    }
+
+    fun getQuizOptions() {
+        viewModelScope.launch {
+            dao?.fetchAllTasks()?.shuffleFlow()?.collect {
+
+                quizWordOptions.value = it.subList(0, 4)
+            }
+
+
         }
     }
 
