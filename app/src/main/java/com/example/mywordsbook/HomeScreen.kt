@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -128,18 +129,30 @@ fun ItemList(item: Word, onClick: (id: Int) -> Unit) {
         ) {
         Text(text = item.wording, fontSize = 18.sp, color = Color.Black)
 
-        Icon(
-            Icons.Default.Create,
-            contentDescription = "",
+        Row(
             Modifier
-                .align(Alignment.End)
-                .clickable {
-                    onClick(item.id)
-
-                },
-
-
+                .align(Alignment.End), verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = item.createdDateTime,
+                fontSize = 8.sp,
+                color = Color.DarkGray
             )
+            Icon(
+                Icons.Default.Create,
+                contentDescription = "",
+                Modifier
+                    .clickable {
+                        onClick(item.id)
+
+                    }
+                    .padding(10.dp),
+
+
+                )
+
+        }
+
         Text(text = item.meaning, fontSize = 16.sp, color = Color.DarkGray)
 
 

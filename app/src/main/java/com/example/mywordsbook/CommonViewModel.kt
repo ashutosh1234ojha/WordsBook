@@ -18,7 +18,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
 
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Collections
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,7 +73,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     fun saveWordMeaning(_word: String, _meaning: String) {
         viewModelScope.launch(Dispatchers.IO) {
             if (selectedWord == null) {
-                dao?.addWord(Word(meaning = _meaning, wording = _word))
+                dao?.addWord(Word(meaning = _meaning, wording = _word, createdDateTime = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.ENGLISH).format(Date())))
             } else {
                 selectedWord?.apply {
                     meaning = _meaning
@@ -105,7 +108,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     fun getQuizOptions() {
         viewModelScope.launch {
             dao?.fetchAllTasks()?.shuffleFlow()?.collect {
-
+                if(it.size>=4)
                 quizWordOptions.value = it.subList(0, 4)
             }
 

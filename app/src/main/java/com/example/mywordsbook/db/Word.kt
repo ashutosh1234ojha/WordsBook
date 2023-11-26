@@ -9,5 +9,6 @@ data class Word(
     var wording: String,
     var meaning: String,
     @PrimaryKey(true) var id: Int = 0,
-    var isTested: Boolean=false
+    var isTested: Boolean=false,
+    var createdDateTime:String
 )
