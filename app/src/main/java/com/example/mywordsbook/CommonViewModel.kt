@@ -44,7 +44,6 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     }
 
     fun getSavedWords(isShuffled: Boolean) {
-
         viewModelScope.launch {
             if (isShuffled) {
                 dao?.fetchAllTasks()?.shuffleFlow()?.collect {
@@ -57,12 +56,15 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
             }
 
         }
-//        if (isShuffled) {
-//            return dao?.fetchAllTasks()!!
-//        } else {
-//            return dao?.fetchAllTasks()!!
-//
-//        }
+    }
+
+    fun getSavedWordsLatestFirst() {
+        viewModelScope.launch {
+            dao?.fetchAllTasks()?.collect{
+
+            }
+
+        }
     }
 
 
@@ -73,7 +75,18 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     fun saveWordMeaning(_word: String, _meaning: String) {
         viewModelScope.launch(Dispatchers.IO) {
             if (selectedWord == null) {
-                dao?.addWord(Word(meaning = _meaning, wording = _word, createdDateTime = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.ENGLISH).format(Date())))
+                dao?.addWord(
+                    Word(
+                        meaning = _meaning,
+                        wording = _word,
+                        createdDateTime = SimpleDateFormat(
+                            "dd/M/yyyy hh:mm:ss",
+                            Locale.ENGLISH
+                        ).format(
+                            Date()
+                        )
+                    )
+                )
             } else {
                 selectedWord?.apply {
                     meaning = _meaning
@@ -108,8 +121,8 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     fun getQuizOptions() {
         viewModelScope.launch {
             dao?.fetchAllTasks()?.shuffleFlow()?.collect {
-                if(it.size>=4)
-                quizWordOptions.value = it.subList(0, 4)
+                if (it.size >= 4)
+                    quizWordOptions.value = it.subList(0, 4)
             }
 
 
