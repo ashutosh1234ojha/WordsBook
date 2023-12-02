@@ -21,44 +21,8 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun CustomAlertDialog(
     onSelection: (Int) -> Unit,
-    onConfirmation: () -> Unit,
     dialogText: String,
-    icon: ImageVector,
 ) {
-//    AlertDialog(
-//        icon = {
-//            Icon(icon, contentDescription = "Icon")
-//        },
-//        text = {
-//            Text(
-//                modifier = Modifier.fillMaxWidth(),
-//                textAlign = TextAlign.Center,
-//                text = dialogText
-//            )
-//        },
-//        onDismissRequest = {
-//            onDismissRequest()
-//
-//        },
-//        confirmButton = {
-//            TextButton(
-//                onClick = {
-//                    onConfirmation()
-//                }
-//            ) {
-//                Text("Confirm")
-//            }
-//        },
-//        dismissButton = {
-//            TextButton(
-//                onClick = {
-//                    onDismissRequest()
-//                }
-//            ) {
-//                Text("Dismiss")
-//            }
-//        }
-//    )
 
     Dialog(onDismissRequest = { onSelection(0) }) {
 
@@ -99,7 +63,7 @@ fun CustomAlertDialog(
                         modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
                         style = TextStyle(
                             color = Black
-                        ), text = "Old to New"
+                        ), text = "Descending Order"
                     )
                 }
                 TextButton(
@@ -111,7 +75,7 @@ fun CustomAlertDialog(
                         modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
                         style = TextStyle(
                             color = Black
-                        ), text = "New to Old"
+                        ), text = "Ascending Order"
                     )
                 }
             }

@@ -74,26 +74,16 @@ fun HomeScreen(
         CustomAlertDialog(
             onSelection = {
                 when (it) {
-
                     1 -> homeViewModel.getSavedWords(true)
-
-                    2 -> homeViewModel.getSavedWordsLatestFirst()
-
-                    3 -> {
-
-                    }
-
+                    2 -> homeViewModel.getSavedWordsLatestFirst(true)
+                    3 -> homeViewModel.getSavedWordsLatestFirst(false)
                     else -> {
 
                     }
                 }
                 showDialog = !showDialog
             },
-            onConfirmation = {
-                showDialog = !showDialog
-            },
             dialogText = "Choose the filter option",
-            icon = Icons.Default.Info
         )
     }
 

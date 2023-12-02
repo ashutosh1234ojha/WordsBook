@@ -58,9 +58,19 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
         }
     }
 
-    fun getSavedWordsLatestFirst() {
+    fun getSavedWordsLatestFirst(isDescending: Boolean) {
         viewModelScope.launch {
-            dao?.fetchAllTasks()?.collect{
+            dao?.fetchAllTasks()?.collect {
+//                val temp = it
+//                val sorted = arrayListOf<Word>()
+                if (isDescending) {
+                    list.value = it.sortedByDescending { it.createdDateTime }
+
+                } else {
+                    list.value = it.sortedByDescending { it.createdDateTime }.reversed()
+
+                }
+
 
             }
 
