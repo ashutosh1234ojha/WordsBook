@@ -3,7 +3,7 @@ app/test.java
 .idea/modules.xml
 .idea/modules/
 app/build/
-*.gradle/
+.gradle/
 
 
 
