@@ -82,7 +82,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
         selectedWord = word
     }
 
-    fun saveWordMeaning(_word: String, _meaning: String) {
+    fun saveWordMeaning(_word: String, _meaning: String,_isImportant:Boolean=false) {
         viewModelScope.launch(Dispatchers.IO) {
             if (selectedWord == null) {
                 dao?.addWord(
@@ -94,13 +94,14 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
                             Locale.ENGLISH
                         ).format(
                             Date()
-                        )
+                        ), isImportant = _isImportant
                     )
                 )
             } else {
                 selectedWord?.apply {
                     meaning = _meaning
                     wording = _word
+                    isImportant=_isImportant
                     dao?.addWord(this)
                 }
             }
