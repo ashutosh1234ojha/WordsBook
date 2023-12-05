@@ -1,0 +1,9 @@
+app/test.java
+.gradle/file-system.probe
+.idea/modules.xml
+.idea/modules/
+app/build/
+*.gradle/
+
+
+
