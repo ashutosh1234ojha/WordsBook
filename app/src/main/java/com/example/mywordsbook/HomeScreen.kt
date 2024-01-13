@@ -1,14 +1,11 @@
 package com.example.mywordsbook
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,24 +16,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
-import androidx.compose.runtime.*
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -44,9 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -54,8 +39,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.example.mywordsbook.db.Word
-import kotlinx.coroutines.flow.Flow
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+
+var lastDate = ""
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,6 +52,7 @@ fun HomeScreen(
         mutableStateOf<List<Word>>(emptyList()) // Initial state
     }
     var showDialog by remember { mutableStateOf(false) }
+    var lastDate by remember { mutableStateOf("") }
 
     mutableList = homeViewModel.list.collectAsState(initial = emptyList()).value
 
@@ -75,8 +61,16 @@ fun HomeScreen(
             onSelection = {
                 when (it) {
                     1 -> homeViewModel.getSavedWords(true)
-                    2 -> homeViewModel.getSavedWordsLatestFirst(true)
-                    3 -> homeViewModel.getSavedWordsLatestFirst(false)
+                    2 -> {
+                        lastDate = ""
+                        homeViewModel.getSavedWordsLatestFirst(true)
+                    }
+
+                    3 -> {
+                        lastDate = ""
+                        homeViewModel.getSavedWordsLatestFirst(false)
+                    }
+
                     else -> {
 
                     }
@@ -115,11 +109,13 @@ fun HomeScreen(
         )
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(mutableList) { item ->
-                ItemList(item) { selectedId ->
+//                ItemList(item) { selectedId ->
+//                    homeViewModel._setSelectedWord(item)
+//                    navController.navigate("AddWordScreen")
+//                }
+                WordCardUI(item = item) { selectedId ->
                     homeViewModel._setSelectedWord(item)
                     navController.navigate("AddWordScreen")
-
-
                 }
             }
         }
@@ -168,39 +164,49 @@ fun ItemList(item: Word, onClick: (id: Int) -> Unit) {
             .padding(bottom = 5.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp))
-            .background(Color(0xFFADDFAD))
-            .padding(10.dp),
-
-        ) {
-        Text(text = item.wording, fontSize = 18.sp, color = Color.Black)
-
-        Row(
-            Modifier
-                .align(Alignment.End), verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = item.createdDateTime,
-                fontSize = 8.sp,
-                color = Color.DarkGray
-            )
-            Icon(
-                Icons.Default.Create,
-                contentDescription = "",
-                Modifier
-                    .clickable {
-                        onClick(item.id)
-
-                    }
-                    .padding(10.dp),
-
-
-                )
+            .background(Color.White)
+            .padding(2.dp),
+    ) {
+        val currentDate = item.createdDateTime.substringBefore(" ")
+        if (!lastDate.equals(currentDate)) {
+            lastDate = currentDate
+            Text(text = lastDate, fontSize = 16.sp, color = Color.DarkGray)
 
         }
 
-        Text(text = item.meaning, fontSize = 16.sp, color = Color.DarkGray)
+        Column(
+            modifier = Modifier
+                .padding(bottom = 5.dp)
+                .fillMaxWidth()
+                .clip(shape = RoundedCornerShape(10.dp))
+                .background(Color(0xFFADDFAD))
+                .padding(10.dp),
 
+            ) {
 
+            Row(
+                Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = item.wording,
+                    fontSize = 18.sp,
+                    color = Color.Black,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    Icons.Default.Create,
+                    contentDescription = "",
+                    Modifier
+                        .clickable { onClick(item.id) }
+                        .padding(10.dp)
+                )
+            }
+
+            Text(text = item.meaning, fontSize = 16.sp, color = Color.DarkGray)
+        }
     }
 
 

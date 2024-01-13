@@ -40,6 +40,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        setContent {
+//            BankCardUi()
+//        }
         setContent {
             commonViewModel = ViewModelProvider(this).get(CommonViewModel::class.java)
 //
