@@ -35,6 +35,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     //    var flowWordList by mutableStateOf(emptyList<Word>())
     var list = MutableStateFlow<List<Word>>(emptyList())
     var quizWordOptions = MutableStateFlow<List<Word>>(emptyList())
+    var score = MutableStateFlow<Int>(0)
 
     init {
         dao = wordDatabase.wordDao()
@@ -82,7 +83,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
         selectedWord = word
     }
 
-    fun saveWordMeaning(_word: String, _meaning: String,_isImportant:Boolean=false) {
+    fun saveWordMeaning(_word: String, _meaning: String, _isImportant: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
             if (selectedWord == null) {
                 dao?.addWord(
@@ -101,7 +102,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
                 selectedWord?.apply {
                     meaning = _meaning
                     wording = _word
-                    isImportant=_isImportant
+                    isImportant = _isImportant
                     dao?.addWord(this)
                 }
             }
@@ -137,6 +138,15 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
             }
 
 
+        }
+    }
+
+
+    fun updateScore(isCorrect: Boolean) {
+        if (isCorrect) {
+            score.value += 1
+        } else if (score.value != 0) {
+            score.value -= 1
         }
     }
 

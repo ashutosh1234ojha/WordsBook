@@ -3,6 +3,7 @@ package com.example.mywordsbook
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,9 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -67,130 +74,88 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
             commonViewModel.getQuizOptions()
-            selectedOption.value=""
+            selectedOption.value = ""
 
         }
     }
     HorizontalPager(state = pagerState) { page ->
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
-                .clip(shape = RoundedCornerShape(25.dp, 25.dp, 25.dp, 25.dp))
-                .background(Color.LightGray)
-        ) {
-            Column(
+        Column {
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
+                    .align(alignment = Alignment.End)
+                    .padding(10.dp)
             ) {
                 Text(
-                    text = word?.wording ?: "",
+                    text = "Score ${commonViewModel.score.value}",
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        fontSize = 20.sp
-                    )
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color.value),
-
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = selectedOption.value == (listWordsNew?.get(0)?.meaning ?: ""),
-                        onClick = {
-                            selectedOption.value = listWordsNew?.get(0)?.meaning ?: ""
-//                            color.value =
-//                                getBgColor(correctOption.value, listWordsNew?.get(0)?.meaning ?: "")
-                        }
-
-                    )
-                    Text(listWordsNew?.get(0)?.meaning ?: "")
-
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color.value),
-
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = selectedOption.value == (listWordsNew?.get(1)?.meaning ?: ""),
-                        onClick = {
-                            selectedOption.value = listWordsNew?.get(1)?.meaning ?: ""
-                          //  color.value =
-                              //  getBgColor(correctOption.value, listWordsNew?.get(1)?.meaning ?: "")
-
-                        }
-
-                    )
-                    Text(listWordsNew?.get(1)?.meaning ?: "")
-
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color.value),
-
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = selectedOption.value == (listWordsNew?.get(2)?.meaning ?: ""),
-                        onClick = {
-                            selectedOption.value = listWordsNew?.get(2)?.meaning ?: ""
-//                            color.value =
-                                //getBgColor(correctOption.value, listWordsNew?.get(2)?.meaning ?: "")
-
-                        }
-
-                    )
-                    Text(listWordsNew?.get(2)?.meaning ?: "")
-
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color.value),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = selectedOption.value == (listWordsNew?.get(3)?.meaning ?: ""),
-                        onClick = {
-                            selectedOption.value = listWordsNew?.get(3)?.meaning ?: ""
-//                            if(selectedOption.value==correctOption.value){
-//
-//                            }
-//                            color.value =
-                              //  getBgColor(correctOption.value, listWordsNew?.get(3)?.meaning ?: "")
-
-                        }
-
-                    )
-                    Text(listWordsNew?.get(3)?.meaning ?: "")
-
-                }
-                Text(
-                    text = "Result ${selectedOption.value==word?.meaning}",
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
+                        color = Color.Green,
                         fontSize = 20.sp
                     )
                 )
             }
-        }
+            Card(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(5.dp, 5.dp, 5.dp, 5.dp))
+                    .background(Color(0xFFF5F5DC))
+                    .padding(vertical = 50.dp)
+            ) {
+                Text(
+                    modifier = Modifier.background(Color.Transparent),
+                    text = buildAnnotatedString {
+                        append("What the meaning of ")
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.Blue,
+                                fontWeight = FontWeight.Bold
+                            )
+                        ) {
+                            append(word?.wording ?: "")
+                        }
+                        append("?")
+                    },
+                    style = TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Black,
+                        fontSize = 20.sp, textAlign = TextAlign.Center
+                    )
+                )
 
+
+            }
+
+            QuizOption(0, option = listWordsNew?.get(0)?.meaning ?: "") {
+                selectedOption.value = listWordsNew?.get(0)?.meaning ?: ""
+                commonViewModel.updateScore(selectedOption.value == word?.meaning)
+
+
+            }
+            QuizOption(1, option = listWordsNew?.get(1)?.meaning ?: "") {
+                selectedOption.value = listWordsNew?.get(1)?.meaning ?: ""
+                commonViewModel.updateScore(selectedOption.value == word?.meaning)
+
+
+            }
+            QuizOption(2, option = listWordsNew?.get(2)?.meaning ?: "") {
+                selectedOption.value = listWordsNew?.get(2)?.meaning ?: ""
+                commonViewModel.updateScore(selectedOption.value == word?.meaning)
+
+
+            }
+            QuizOption(3, option = listWordsNew?.get(3)?.meaning ?: "") {
+                selectedOption.value = listWordsNew?.get(3)?.meaning ?: ""
+                commonViewModel.updateScore(selectedOption.value == word?.meaning)
+
+
+            }
+
+        }
 
 
     }
 
 }
 
-fun getBgColor(correctAnswer: String, selectedOption: String): Color {
-    return if (correctAnswer.equals(selectedOption)) Color.Green else Color.Red
-}
