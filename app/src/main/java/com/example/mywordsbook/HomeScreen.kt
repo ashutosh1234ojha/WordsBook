@@ -107,7 +107,7 @@ fun HomeScreen(
                 }
             }
         )
-        LazyColumn(modifier = Modifier.weight(1f)) {
+        LazyColumn(modifier = Modifier.weight(1f).padding(bottom = 80.dp)) {
             items(mutableList) { item ->
 //                ItemList(item) { selectedId ->
 //                    homeViewModel._setSelectedWord(item)
