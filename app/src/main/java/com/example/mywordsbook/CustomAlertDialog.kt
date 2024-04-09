@@ -63,7 +63,7 @@ fun CustomAlertDialog(
                         modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
                         style = TextStyle(
                             color = Black
-                        ), text = "Descending Order"
+                        ), text = "Latest"
                     )
                 }
                 TextButton(
@@ -75,7 +75,7 @@ fun CustomAlertDialog(
                         modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
                         style = TextStyle(
                             color = Black
-                        ), text = "Ascending Order"
+                        ), text = "Oldest"
                     )
                 }
             }

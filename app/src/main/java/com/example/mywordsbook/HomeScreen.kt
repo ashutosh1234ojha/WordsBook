@@ -77,7 +77,7 @@ fun HomeScreen(
                 }
                 showDialog = !showDialog
             },
-            dialogText = "Choose the filter option",
+            dialogText = "sort by...",
         )
     }
 
