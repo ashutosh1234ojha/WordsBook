@@ -21,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
@@ -44,7 +46,7 @@ class MainActivity : ComponentActivity() {
 //            BankCardUi()
 //        }
         setContent {
-            commonViewModel = ViewModelProvider(this).get(CommonViewModel::class.java)
+            commonViewModel = ViewModelProvider(this)[CommonViewModel::class.java]
 //
 //            Column {
 //                Host(commonViewModel)
@@ -63,8 +65,8 @@ class MainActivity : ComponentActivity() {
                     ),
                     BottomNavigationItem(
                         "Quiz",
-                        Icons.Filled.Menu,
-                        Icons.Outlined.Menu,
+                       ImageVector.vectorResource(R.drawable.test_icon_outline),
+                        ImageVector.vectorResource(R.drawable.test_icon),
                         "QuizScreen"
                     ),
                     BottomNavigationItem(
