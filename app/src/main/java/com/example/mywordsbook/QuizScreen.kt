@@ -41,11 +41,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mywordsbook.db.Word
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import java.util.Random
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewModel) {
+    val myState by commonViewModel.score.collectAsState()
 
     var firstFour by remember {
         mutableStateOf<List<Word>>(emptyList()) // Initial state
@@ -87,7 +91,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     .padding(10.dp)
             ) {
                 Text(
-                    text = "Score ${commonViewModel.score.value}",
+                    text = "Score ${myState}",
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         color = Color.Green,
