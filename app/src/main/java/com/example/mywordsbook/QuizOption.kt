@@ -25,6 +25,7 @@ import androidx.navigation.navOptions
 
 @Composable
 fun QuizOption(number: Int, option: String, onClick: () -> Unit) {
+
     Column {
         Row(
             modifier = Modifier.padding(10.dp),
