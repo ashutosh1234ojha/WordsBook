@@ -156,19 +156,14 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
 
                     }
 
-                    QuizOption(0, option = listWordsNew?.get(0)?.meaning ?: "") {
+                    QuizOption(0, option = listWordsNew?.get(0)?.meaning ?: "",word?.meaning?:"") {
                         handleQuizClick(0, selectedOption, commonViewModel, listWordsNew, word) {
                             coroutineScope.launch {
-
                                 pagerState.animateScrollToPage(currentPage + 1)
-
-
                             }
                         }
-
-
                     }
-                    QuizOption(1, option = listWordsNew?.get(1)?.meaning ?: "") {
+                    QuizOption(1, option = listWordsNew?.get(1)?.meaning ?: "",word?.meaning?:"") {
                         handleQuizClick(
                             1,
                             selectedOption,
@@ -183,10 +178,8 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
 
                             }
                         }
-
-
                     }
-                    QuizOption(2, option = listWordsNew?.get(2)?.meaning ?: "") {
+                    QuizOption(2, option = listWordsNew?.get(2)?.meaning ?: "",word?.meaning?:"") {
                         handleQuizClick(
                             2,
                             selectedOption,
@@ -204,7 +197,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
 
 
                     }
-                    QuizOption(3, option = listWordsNew?.get(3)?.meaning ?: "") {
+                    QuizOption(3, option = listWordsNew?.get(3)?.meaning ?: "",word?.meaning?:"") {
                         handleQuizClick(
                             3,
                             selectedOption,
@@ -219,13 +212,8 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
 
                             }
                         }
-
-
                     }
-
                 }
-
-
             }
 
         } else {

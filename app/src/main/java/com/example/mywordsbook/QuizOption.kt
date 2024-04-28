@@ -12,6 +12,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,23 +26,35 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.navOptions
+import com.example.mywordsbook.db.Word
 
 @Composable
-fun QuizOption(number: Int, option: String, onClick: () -> Unit) {
-
+fun QuizOption(number: Int, option: String, meaning: String = "", onClick: () -> Unit) {
+    var isTrue by remember {
+        mutableStateOf(false) // Initial state
+    }
     Column {
         Row(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier
+                .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "${number+1}.",
-                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                text = "${number + 1}.",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center
+                )
             )
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp).clickable {
+                    .padding(10.dp)
+                    .clickable {
+                        if (option == meaning) {
+                            isTrue = true
+                        }
                         onClick()
 
                     }
@@ -46,10 +62,9 @@ fun QuizOption(number: Int, option: String, onClick: () -> Unit) {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(10.dp)
+                        .background(if (isTrue) Color.Green else Color.LightGray)
                         .clip(shape = RoundedCornerShape(50.dp))
-                        .padding(10.dp)
-                       ,
+                        .padding(10.dp),
                     text = option,
                     style = TextStyle(textAlign = TextAlign.Center)
                 )
