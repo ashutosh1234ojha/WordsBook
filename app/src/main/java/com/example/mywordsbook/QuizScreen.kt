@@ -133,8 +133,8 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                             .padding(vertical = 50.dp)
                     ) {
                         Text(
-                            modifier = Modifier.background(Color.Transparent),
-                            text = buildAnnotatedString {
+                            modifier = Modifier.fillMaxWidth(),
+                           text = buildAnnotatedString {
                                 append("What the meaning of ")
                                 withStyle(
                                     style = SpanStyle(
@@ -156,14 +156,22 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
 
                     }
 
-                    QuizOption(0, option = listWordsNew?.get(0)?.meaning ?: "",word?.meaning?:"") {
+                    QuizOption(
+                        0,
+                        option = listWordsNew?.get(0)?.meaning ?: "",
+                        word?.meaning ?: ""
+                    ) {
                         handleQuizClick(0, selectedOption, commonViewModel, listWordsNew, word) {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(currentPage + 1)
                             }
                         }
                     }
-                    QuizOption(1, option = listWordsNew?.get(1)?.meaning ?: "",word?.meaning?:"") {
+                    QuizOption(
+                        1,
+                        option = listWordsNew?.get(1)?.meaning ?: "",
+                        word?.meaning ?: ""
+                    ) {
                         handleQuizClick(
                             1,
                             selectedOption,
@@ -179,7 +187,11 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                             }
                         }
                     }
-                    QuizOption(2, option = listWordsNew?.get(2)?.meaning ?: "",word?.meaning?:"") {
+                    QuizOption(
+                        2,
+                        option = listWordsNew?.get(2)?.meaning ?: "",
+                        word?.meaning ?: ""
+                    ) {
                         handleQuizClick(
                             2,
                             selectedOption,
@@ -197,7 +209,11 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
 
 
                     }
-                    QuizOption(3, option = listWordsNew?.get(3)?.meaning ?: "",word?.meaning?:"") {
+                    QuizOption(
+                        3,
+                        option = listWordsNew?.get(3)?.meaning ?: "",
+                        word?.meaning ?: ""
+                    ) {
                         handleQuizClick(
                             3,
                             selectedOption,
