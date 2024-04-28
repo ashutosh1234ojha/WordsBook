@@ -3,6 +3,7 @@ package com.example.mywordsbook
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -67,8 +68,6 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
     }
 
     val selectedOption = remember { mutableStateOf("") }
-    val correctOption = remember { mutableStateOf(word?.meaning ?: "") }
-    val color = remember { mutableStateOf(Color.Cyan) }
 
 
     // Display 10 items
@@ -86,45 +85,59 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
     }
     val coroutineScope = rememberCoroutineScope()
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Black)
+                .padding(20.dp)
+
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                modifier = Modifier.clickable {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(currentPage - 1)
+                    }
+                },
+                text = "Previous",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+            )
+            Text(
+                text = "Score $myState",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Green,
+                    fontSize = 40.sp
+                )
+            )
+            Text(
+                modifier = Modifier.clickable {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(currentPage + 1)
+                    }
+                },
+                text = "Next",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+            )
+        }
         if (firstFour.size >= 4) {
             HorizontalPager(state = pagerState) { page ->
 
                 Column {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp), horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
 
-
-                        Button(onClick = {
-                            coroutineScope.launch {
-
-                                pagerState.animateScrollToPage(currentPage + 1)
-
-
-                            }
-                        }) {
-                            Text(
-                                text = "Next Quiz",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.Green,
-                                    fontSize = 20.sp
-                                )
-                            )
-                        }
-                        Text(
-                            text = "Score ${myState}",
-                            style = TextStyle(
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Green,
-                                fontSize = 20.sp
-                            )
-                        )
-                    }
-                    Card(
+                    Box(
                         modifier = Modifier
                             .padding(10.dp)
                             .fillMaxWidth()
@@ -134,7 +147,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     ) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
-                           text = buildAnnotatedString {
+                            text = buildAnnotatedString {
                                 append("What the meaning of ")
                                 withStyle(
                                     style = SpanStyle(
