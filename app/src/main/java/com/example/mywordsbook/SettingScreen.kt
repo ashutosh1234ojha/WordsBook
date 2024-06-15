@@ -32,22 +32,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SettingScreen(navController: NavHostController, commonViewModel: CommonViewModel) {
-//    val setting by commonViewModel.getSettings()!!.collectAsState(initial = null)
-//    var switchState by remember { mutableStateOf(setting?.isCardView ?: false) }
     val isSwitchOn by commonViewModel.isSwitchOn.collectAsState()
 
-
-    Log.d("TagIsCardView","reading $isSwitchOn")
-
-//    LaunchedEffect(setting) {
-//        setting?.let {
-//            switchState = it.isCardView
-//        }
-//    }
-//
-//    LaunchedEffect(switchState) {
-//            commonViewModel.updateListView(switchState)
-//        }
 
     Column(
         modifier = Modifier
@@ -78,7 +64,6 @@ fun SettingScreen(navController: NavHostController, commonViewModel: CommonViewM
             Switch(
                 checked = isSwitchOn,
                 onCheckedChange = { newCheckedValue ->
-                   // isSwitchOn = newCheckedValue
                     commonViewModel.updateListView(newCheckedValue)
                 }
             )

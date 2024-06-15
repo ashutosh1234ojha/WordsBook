@@ -30,34 +30,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewModel() {
-    var dao: WordDao?
+    private var dao: WordDao? = wordDatabase.wordDao()
 
     var selectedWord: Word? = null
-
-//    lateinit var flowWordList: Flow<List<Word>>
-
-    //    var flowWordList by mutableStateOf(emptyList<Word>())
     var list = MutableStateFlow<List<Word>>(emptyList())
     var quizWordOptions = MutableStateFlow<List<Word>>(emptyList())
     var score = MutableStateFlow<Int>(0)
-    var settingDao: SettingDao?
-
-    //    val _setting = mu<Settings>(Settings(false))
-//    val setting: State<Settings> = _setting
+    var settingDao: SettingDao? = wordDatabase.settingDao()
     private val _isSwitchOn = MutableStateFlow(false)
     val isSwitchOn: StateFlow<Boolean> get() = _isSwitchOn
 
 
     init {
-
-//        viewModelScope.launch {
-            dao = wordDatabase.wordDao()
-            settingDao = wordDatabase.settingDao()
         viewModelScope.launch {
-            _isSwitchOn.value=settingDao?.getSetting()?.isCardView?:false
+            settingDao?.getSetting()?.collect {
+                _isSwitchOn.value = it?.isCardView?:false
+            }
 
         }
-//        }
 
         getSavedWords(false)
         getQuizOptions()
@@ -82,8 +72,6 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     fun getSavedWordsLatestFirst(isDescending: Boolean) {
         viewModelScope.launch {
             dao?.fetchAllTasks()?.collect {
-//                val temp = it
-//                val sorted = arrayListOf<Word>()
                 if (isDescending) {
                     list.value = it.sortedByDescending { it.createdDateTime }
 
@@ -142,7 +130,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
         return this.transform { originalList ->
             if (originalList.isNotEmpty()) {
                 val shuffledList = originalList.toMutableList()
-                Collections.shuffle(shuffledList)
+                shuffledList.shuffle()
                 emit(shuffledList)
             } else {
                 emit(originalList)
@@ -172,44 +160,9 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
 
     fun updateListView(isCardView: Boolean) {
         viewModelScope.launch {
-
-//            getSettings()?.collect {
-//                _setting.value = it
-//            }
-
-//            if (setting == null) {
-//                val into = settingDao?.updateSetting(Settings(isCardView))
-//                Log.d("TagIsCardView", "Db $into")
-//
-//            } else {
-//                setting.value.isCardView = isCardView
-//                val into = settingDao?.updateSetting(setting.value)
-//                Log.d("TagIsCardView", "Db $into")
-//
-//
-//            }
-//
-//
-//        }
-
-    }
-
-//    fun getSettings(): Flow<Settings>? {
-//        //   Log.d("TagIsCardView", "get")
-//        viewModelScope.launch {
-//
-//            settingDao?.getSetting()?.collect {
-//
-//                Log.d("TagIsCardView", "saved ${it?.isCardView}")
-//            }
-//        }
-//
-//        return settingDao?.getSetting()
-        viewModelScope.launch {
-            settingDao?.updateSetting(Settings(isCardView,1))
+            settingDao?.updateSetting(Settings(isCardView, 1))
             _isSwitchOn.value = isCardView
         }
-//
     }
 
 }
