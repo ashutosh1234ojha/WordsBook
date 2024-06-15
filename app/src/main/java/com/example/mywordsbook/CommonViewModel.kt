@@ -1,10 +1,13 @@
 package com.example.mywordsbook
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mywordsbook.db.SettingDao
+import com.example.mywordsbook.db.Settings
 import com.example.mywordsbook.db.Word
 import com.example.mywordsbook.db.WordDao
 import com.example.mywordsbook.db.WordDatabase
@@ -12,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -36,9 +40,25 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     var list = MutableStateFlow<List<Word>>(emptyList())
     var quizWordOptions = MutableStateFlow<List<Word>>(emptyList())
     var score = MutableStateFlow<Int>(0)
+    var settingDao: SettingDao?
+
+    //    val _setting = mu<Settings>(Settings(false))
+//    val setting: State<Settings> = _setting
+    private val _isSwitchOn = MutableStateFlow(false)
+    val isSwitchOn: StateFlow<Boolean> get() = _isSwitchOn
+
 
     init {
-        dao = wordDatabase.wordDao()
+
+//        viewModelScope.launch {
+            dao = wordDatabase.wordDao()
+            settingDao = wordDatabase.settingDao()
+        viewModelScope.launch {
+            _isSwitchOn.value=settingDao?.getSetting()?.isCardView?:false
+
+        }
+//        }
+
         getSavedWords(false)
         getQuizOptions()
 
@@ -148,6 +168,48 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
         } else if (score.value != 0) {
             score.value -= 1
         }
+    }
+
+    fun updateListView(isCardView: Boolean) {
+        viewModelScope.launch {
+
+//            getSettings()?.collect {
+//                _setting.value = it
+//            }
+
+//            if (setting == null) {
+//                val into = settingDao?.updateSetting(Settings(isCardView))
+//                Log.d("TagIsCardView", "Db $into")
+//
+//            } else {
+//                setting.value.isCardView = isCardView
+//                val into = settingDao?.updateSetting(setting.value)
+//                Log.d("TagIsCardView", "Db $into")
+//
+//
+//            }
+//
+//
+//        }
+
+    }
+
+//    fun getSettings(): Flow<Settings>? {
+//        //   Log.d("TagIsCardView", "get")
+//        viewModelScope.launch {
+//
+//            settingDao?.getSetting()?.collect {
+//
+//                Log.d("TagIsCardView", "saved ${it?.isCardView}")
+//            }
+//        }
+//
+//        return settingDao?.getSetting()
+        viewModelScope.launch {
+            settingDao?.updateSetting(Settings(isCardView,1))
+            _isSwitchOn.value = isCardView
+        }
+//
     }
 
 }

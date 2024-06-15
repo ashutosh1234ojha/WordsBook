@@ -13,8 +13,7 @@ interface SettingDao {
 
 
     @Query("SELECT * FROM Settings")
-    fun getSetting(): Flow<Settings>
-
+    suspend fun getSetting(): Settings?
 
 
 }

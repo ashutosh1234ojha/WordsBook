@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Settings(
-    var isCardView: Boolean,
+    var isCardView: Boolean=false,
     @PrimaryKey(true) var id: Int = 0,
 )
