@@ -32,18 +32,6 @@ import androidx.compose.ui.unit.sp
 import com.example.mywordsbook.db.Word
 
 
-val LatoFont = FontFamily(
-    Font(R.font.lato_black, FontWeight.Black),
-    Font(R.font.lato_black_italic, FontWeight.Black, FontStyle.Italic),
-    Font(R.font.lato_bold, FontWeight.Bold),
-    Font(R.font.lato_bold_italic, FontWeight.Bold, FontStyle.Italic),
-    Font(R.font.lato_italic, FontWeight.Normal, FontStyle.Italic),
-    Font(R.font.lato_light, FontWeight.Light),
-    Font(R.font.lato_light_italic, FontWeight.Light, FontStyle.Italic),
-    Font(R.font.lato_regular, FontWeight.Normal),
-    Font(R.font.lato_thin, FontWeight.Thin),
-    Font(R.font.lato_thin_italic, FontWeight.Thin, FontStyle.Italic)
-)
 
 @Composable
 fun WordCardUI(

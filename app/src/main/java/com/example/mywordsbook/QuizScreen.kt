@@ -58,6 +58,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
     }
 
 
+
     firstFour = commonViewModel.quizWordOptions.collectAsState(initial = emptyList()).value
 
     var word: Word? = null

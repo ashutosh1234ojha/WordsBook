@@ -53,6 +53,8 @@ fun HomeScreen(
     }
     var showDialog by remember { mutableStateOf(false) }
     var lastDate by remember { mutableStateOf("") }
+    val isSwitchOn by homeViewModel.isSwitchOn.collectAsState()
+
 
     mutableList = homeViewModel.list.collectAsState(initial = emptyList()).value
 
@@ -113,10 +115,18 @@ fun HomeScreen(
 //                    homeViewModel._setSelectedWord(item)
 //                    navController.navigate("AddWordScreen")
 //                }
-                WordCardUI(item = item) { selectedId ->
-                    homeViewModel._setSelectedWord(item)
-                    navController.navigate("AddWordScreen")
+                if(isSwitchOn){
+                    WordListUI(item = item) { selectedId ->
+                        homeViewModel._setSelectedWord(item)
+                        navController.navigate("AddWordScreen")
+                    }
+                }else{
+                    WordCardUI(item = item) { selectedId ->
+                        homeViewModel._setSelectedWord(item)
+                        navController.navigate("AddWordScreen")
+                    }
                 }
+
             }
         }
 
