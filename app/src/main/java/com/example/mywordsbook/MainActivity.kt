@@ -42,17 +42,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        setContent {
-//            BankCardUi()
-//        }
         setContent {
             commonViewModel = ViewModelProvider(this)[CommonViewModel::class.java]
-//
-//            Column {
-//                Host(commonViewModel)
-//
-//
-//            }
+
             val navController = rememberNavController()
 
             val list =
@@ -90,9 +82,7 @@ class MainActivity : ComponentActivity() {
                                 onClick = {
                                     selectedItemIndex = index
                                     navController.navigate(item.route)
-//                                    if(index==1){
-//                                        commonViewModel.getQuizOptions()
-//                                    }
+
                                 },
                                 label = { item.title },
                                 icon = {
@@ -123,8 +113,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun Host(commonViewModel: CommonViewModel, navController: NavHostController) {
-//    val navController = rememberNavController()
-
     NavHost(navController = navController, startDestination = "HomeScreen") {
         composable("HomeScreen") {
             HomeScreen(navController, commonViewModel)
