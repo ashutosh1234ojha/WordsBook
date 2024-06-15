@@ -38,16 +38,10 @@ fun SettingScreen(navController: NavHostController, commonViewModel: CommonViewM
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
+
     ) {
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "Setting Screen",
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                fontSize = 25.sp, textAlign = TextAlign.Center
-            )
+        Header(
+            headerText = "Setting Screen"
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(

@@ -91,159 +91,165 @@ fun HomeScreen(
 
     Column() {
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = colorResource(id = R.color.primary))
-                .height(50.dp),
+        Header(
+            headerText = "Word List", isActionVisible = true,
+            firstAction = { showDialog = !showDialog },
+            secondAction = {
+                homeViewModel._setSelectedWord(null)
+                    navController.navigate("AddWordScreen")})
+//        Box(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .background(color = colorResource(id = R.color.primary))
+//                .height(50.dp),
+//
+//
+//            ) {
+//
+//            Row(
+//                modifier = Modifier.align(Alignment.CenterEnd)
+//            ) {
+//
+//                IconButton(onClick = {
+//                    showDialog = !showDialog
+//                }) {
+//                    Image(
+//                        painterResource(R.drawable.baseline_filter_alt_24),
+//                        contentDescription = "Shuffle",
+//                        modifier = Modifier
+//                            .width(24.dp)
+//                            .height(24.dp),
+//                    )
+//                }
+//                IconButton(onClick = {
+//                    homeViewModel._setSelectedWord(null)
+//                    navController.navigate("AddWordScreen")
+//                }) {
+//                    Icon(Icons.Filled.Add, "Floating action button.", tint = Color.White)
+//
+//                }
+//            }
+//
+//            Text(
+//                modifier = Modifier.align(Alignment.Center),
+//                text = "Word List",
+//                color = Color.White, fontSize = 20.sp
+//            )
+//
+//        }
 
 
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = 80.dp, start = 10.dp, end = 10.dp)
+                ) {
+                    items(mutableList) { item ->
+                        if (isSwitchOn) {
+                            WordListUI(item = item) { _ ->
+                                homeViewModel._setSelectedWord(item)
+                                navController.navigate("AddWordScreen")
+                            }
+                        } else {
+                            WordCardUI(item = item) { _ ->
+                                homeViewModel._setSelectedWord(item)
+                                navController.navigate("AddWordScreen")
+                            }
+                        }
+
+                    }
+                }
+
+
+            }
+
+    }
+
+
+    @Composable
+    fun LoadingView(onDismiss: () -> Unit) {
+        Dialog(onDismissRequest = { onDismiss() }) {
+
+            Card(
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier
             ) {
+                Column(
+                    Modifier
+                        .background(Color.White)
+                        .padding(12.dp)
+                ) {
+                    Text(
+                        text = "Loading.. Please wait..",
+                        Modifier
+                            .padding(8.dp), textAlign = TextAlign.Center
+                    )
 
-            Row(
-                modifier = Modifier.align(Alignment.CenterEnd)
-            ) {
-
-                IconButton(onClick = {
-                    showDialog = !showDialog
-                }) {
-                    Image(
-                        painterResource(R.drawable.baseline_filter_alt_24),
-                        contentDescription = "Shuffle",
+                    CircularProgressIndicator(
+                        strokeWidth = 4.dp,
                         modifier = Modifier
-                            .width(24.dp)
-                            .height(24.dp),
+                            .align(Alignment.CenterHorizontally)
+                            .padding(8.dp)
                     )
                 }
-                IconButton(onClick = {
-                    homeViewModel._setSelectedWord(null)
-                    navController.navigate("AddWordScreen")
-                }) {
-                    Icon(Icons.Filled.Add, "Floating action button.", tint = Color.White)
-
-                }
-            }
-
-            Text(
-                modifier = Modifier.align(Alignment.Center),
-                text = "Word List",
-                color = Color.White, fontSize = 20.sp
-            )
-
-        }
-
-
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .padding(bottom = 80.dp, start = 10.dp, end = 10.dp)
-        ) {
-            items(mutableList) { item ->
-                if (isSwitchOn) {
-                    WordListUI(item = item) { _ ->
-                        homeViewModel._setSelectedWord(item)
-                        navController.navigate("AddWordScreen")
-                    }
-                } else {
-                    WordCardUI(item = item) { _ ->
-                        homeViewModel._setSelectedWord(item)
-                        navController.navigate("AddWordScreen")
-                    }
-                }
-
-            }
-        }
-
-
-    }
-
-}
-
-
-@Composable
-fun LoadingView(onDismiss: () -> Unit) {
-    Dialog(onDismissRequest = { onDismiss() }) {
-
-        Card(
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-        ) {
-            Column(
-                Modifier
-                    .background(Color.White)
-                    .padding(12.dp)
-            ) {
-                Text(
-                    text = "Loading.. Please wait..",
-                    Modifier
-                        .padding(8.dp), textAlign = TextAlign.Center
-                )
-
-                CircularProgressIndicator(
-                    strokeWidth = 4.dp,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(8.dp)
-                )
             }
         }
     }
-}
 
 
-@Composable
-fun ItemList(item: Word, onClick: (id: Int) -> Unit) {
-    Column(
-        modifier = Modifier
-            .padding(bottom = 5.dp)
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(10.dp))
-            .background(Color.White)
-            .padding(2.dp),
-    ) {
-        val currentDate = item.createdDateTime.substringBefore(" ")
-        if (!lastDate.equals(currentDate)) {
-            lastDate = currentDate
-            Text(text = lastDate, fontSize = 16.sp, color = Color.DarkGray)
-
-        }
-
+    @Composable
+    fun ItemList(item: Word, onClick: (id: Int) -> Unit) {
         Column(
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(10.dp))
-                .background(Color(0xFFADDFAD))
-                .padding(10.dp),
+                .background(Color.White)
+                .padding(2.dp),
+        ) {
+            val currentDate = item.createdDateTime.substringBefore(" ")
+            if (!lastDate.equals(currentDate)) {
+                lastDate = currentDate
+                Text(text = lastDate, fontSize = 16.sp, color = Color.DarkGray)
 
-            ) {
-
-            Row(
-                Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = item.wording,
-                    fontSize = 18.sp,
-                    color = Color.Black,
-                    modifier = Modifier.weight(1f)
-                )
-
-                Icon(
-                    Icons.Default.Create,
-                    contentDescription = "",
-                    Modifier
-                        .clickable { onClick(item.id) }
-                        .padding(10.dp)
-                )
             }
 
-            Text(text = item.meaning, fontSize = 16.sp, color = Color.DarkGray)
+            Column(
+                modifier = Modifier
+                    .padding(bottom = 5.dp)
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(Color(0xFFADDFAD))
+                    .padding(10.dp),
+
+                ) {
+
+                Row(
+                    Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = item.wording,
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    Icon(
+                        Icons.Default.Create,
+                        contentDescription = "",
+                        Modifier
+                            .clickable { onClick(item.id) }
+                            .padding(10.dp)
+                    )
+                }
+
+                Text(text = item.meaning, fontSize = 16.sp, color = Color.DarkGray)
+            }
         }
+
+
     }
-
-
-}
 
 
