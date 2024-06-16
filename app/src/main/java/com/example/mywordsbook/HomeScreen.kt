@@ -46,7 +46,6 @@ import com.example.mywordsbook.db.Word
 
 var lastDate = ""
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavHostController,
@@ -97,47 +96,6 @@ fun HomeScreen(
             secondAction = {
                 homeViewModel._setSelectedWord(null)
                     navController.navigate("AddWordScreen")})
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(color = colorResource(id = R.color.primary))
-//                .height(50.dp),
-//
-//
-//            ) {
-//
-//            Row(
-//                modifier = Modifier.align(Alignment.CenterEnd)
-//            ) {
-//
-//                IconButton(onClick = {
-//                    showDialog = !showDialog
-//                }) {
-//                    Image(
-//                        painterResource(R.drawable.baseline_filter_alt_24),
-//                        contentDescription = "Shuffle",
-//                        modifier = Modifier
-//                            .width(24.dp)
-//                            .height(24.dp),
-//                    )
-//                }
-//                IconButton(onClick = {
-//                    homeViewModel._setSelectedWord(null)
-//                    navController.navigate("AddWordScreen")
-//                }) {
-//                    Icon(Icons.Filled.Add, "Floating action button.", tint = Color.White)
-//
-//                }
-//            }
-//
-//            Text(
-//                modifier = Modifier.align(Alignment.Center),
-//                text = "Word List",
-//                color = Color.White, fontSize = 20.sp
-//            )
-//
-//        }
-
 
                 LazyColumn(
                     modifier = Modifier
@@ -195,61 +153,4 @@ fun HomeScreen(
             }
         }
     }
-
-
-    @Composable
-    fun ItemList(item: Word, onClick: (id: Int) -> Unit) {
-        Column(
-            modifier = Modifier
-                .padding(bottom = 5.dp)
-                .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(10.dp))
-                .background(Color.White)
-                .padding(2.dp),
-        ) {
-            val currentDate = item.createdDateTime.substringBefore(" ")
-            if (!lastDate.equals(currentDate)) {
-                lastDate = currentDate
-                Text(text = lastDate, fontSize = 16.sp, color = Color.DarkGray)
-
-            }
-
-            Column(
-                modifier = Modifier
-                    .padding(bottom = 5.dp)
-                    .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(10.dp))
-                    .background(Color(0xFFADDFAD))
-                    .padding(10.dp),
-
-                ) {
-
-                Row(
-                    Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = item.wording,
-                        fontSize = 18.sp,
-                        color = Color.Black,
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    Icon(
-                        Icons.Default.Create,
-                        contentDescription = "",
-                        Modifier
-                            .clickable { onClick(item.id) }
-                            .padding(10.dp)
-                    )
-                }
-
-                Text(text = item.meaning, fontSize = 16.sp, color = Color.DarkGray)
-            }
-        }
-
-
-    }
-
 
