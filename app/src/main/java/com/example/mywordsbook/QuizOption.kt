@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -27,12 +28,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.navOptions
 import com.example.mywordsbook.db.Word
+import com.example.mywordsbook.ui.theme.Correct_Answer
+
 
 @Composable
-fun QuizOption(number: Int, option: String, meaning: String = "", onClick: () -> Unit) {
+fun QuizOption(
+    number: Int,
+    option: String,
+    meaning: String = "",
+    isDarkTheme: Boolean = false,
+    onClick: () -> Unit
+) {
     var isTrue by remember {
         mutableStateOf(false) // Initial state
     }
+
     Column {
         Row(
             modifier = Modifier
@@ -62,11 +72,14 @@ fun QuizOption(number: Int, option: String, meaning: String = "", onClick: () ->
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(if (isTrue) Color.Green else Color.LightGray)
+                        .background(if (isTrue) Correct_Answer else colorResource(id = R.color.primary))
                         .clip(shape = RoundedCornerShape(50.dp))
                         .padding(10.dp),
                     text = option,
-                    style = TextStyle(textAlign = TextAlign.Center)
+                    style = TextStyle(
+                        textAlign = TextAlign.Center,
+                        color = if (isDarkTheme) Color.White else Color.Black
+                    )
                 )
             }
         }

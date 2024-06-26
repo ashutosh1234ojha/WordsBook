@@ -57,6 +57,7 @@ fun HomeScreen(
     var showDialog by remember { mutableStateOf(false) }
     var lastDate by remember { mutableStateOf("") }
     val isSwitchOn by homeViewModel.isSwitchOn.collectAsState()
+    val isDarkTheme by homeViewModel.isDarkTheme.collectAsState()
 
 
     mutableList = homeViewModel.list.collectAsState(initial = emptyList()).value
@@ -104,7 +105,7 @@ fun HomeScreen(
                 ) {
                     items(mutableList) { item ->
                         if (isSwitchOn) {
-                            WordListUI(item = item) { _ ->
+                            WordListUI(item = item, isDarkTheme = isDarkTheme) { _ ->
                                 homeViewModel._setSelectedWord(item)
                                 navController.navigate("AddWordScreen")
                             }

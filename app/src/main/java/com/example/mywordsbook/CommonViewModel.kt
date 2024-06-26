@@ -40,11 +40,15 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     private val _isSwitchOn = MutableStateFlow(false)
     val isSwitchOn: StateFlow<Boolean> get() = _isSwitchOn
 
+    private val _isDarkTheme = MutableStateFlow(false)
+    val isDarkTheme: StateFlow<Boolean> get() = _isDarkTheme
+
 
     init {
         viewModelScope.launch {
             settingDao?.getSetting()?.collect {
                 _isSwitchOn.value = it?.isCardView?:false
+                _isDarkTheme.value = it?.isDarkTheme?:false
             }
 
         }
@@ -160,8 +164,15 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
 
     fun updateListView(isCardView: Boolean) {
         viewModelScope.launch {
-            settingDao?.updateSetting(Settings(isCardView, 1))
+            settingDao?.updateSetting(Settings(isCardView = isCardView, id = 1))
             _isSwitchOn.value = isCardView
+        }
+    }
+
+    fun updateTheme(isDarkTheme: Boolean) {
+        viewModelScope.launch {
+            settingDao?.updateSetting(Settings(isDarkTheme=isDarkTheme, id = 1))
+            _isDarkTheme.value = isDarkTheme
         }
     }
 

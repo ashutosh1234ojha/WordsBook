@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    lateinit var commonViewModel: CommonViewModel
+    private lateinit var commonViewModel: CommonViewModel
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +45,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             commonViewModel = ViewModelProvider(this)[CommonViewModel::class.java]
+            val isDarkTheme by commonViewModel.isDarkTheme.collectAsState()
+
 
             val navController = rememberNavController()
 
@@ -72,38 +75,42 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(0)
             }
 
-            Surface(modifier = Modifier.fillMaxSize()) {
+            MyWordsBookTheme(isDarkTheme) {
+                Surface(modifier = Modifier.fillMaxSize()) {
 
-                Scaffold(bottomBar = {
-                    NavigationBar {
-                        list.forEachIndexed { index, item ->
-                            NavigationBarItem(
-                                selected = selectedItemIndex == index,
-                                onClick = {
-                                    selectedItemIndex = index
-                                    navController.navigate(item.route)
+                    Scaffold(bottomBar = {
+                        NavigationBar {
+                            list.forEachIndexed { index, item ->
+                                NavigationBarItem(
+                                    selected = selectedItemIndex == index,
+                                    onClick = {
+                                        selectedItemIndex = index
+                                        navController.navigate(item.route)
 
-                                },
-                                label = { item.title },
-                                icon = {
+                                    },
+                                    label = { item.title },
+                                    icon = {
 
-                                    Icon(
-                                        imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
-                                        contentDescription = item.title
-                                    )
-                                })
+                                        Icon(
+                                            imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
+                                            contentDescription = item.title
+                                        )
+                                    })
 
+                            }
                         }
+                    })
+                    { innerPadding ->
+                        val a = innerPadding
+                        Host(commonViewModel = commonViewModel, navController)
+
                     }
-                })
-                { innerPadding ->
-                    val a = innerPadding
-                    Host(commonViewModel = commonViewModel, navController)
+
 
                 }
 
-
             }
+
         }
     }
 
@@ -139,18 +146,9 @@ private fun Host(commonViewModel: CommonViewModel, navController: NavHostControl
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MyWordsBookTheme {
-        Greeting("Android")
-    }
+
 }

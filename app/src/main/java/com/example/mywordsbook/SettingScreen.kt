@@ -24,8 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -33,6 +32,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun SettingScreen(navController: NavHostController, commonViewModel: CommonViewModel) {
     val isSwitchOn by commonViewModel.isSwitchOn.collectAsState()
+    val isDarkTheme by commonViewModel.isDarkTheme.collectAsState()
 
 
     Column(
@@ -45,13 +45,13 @@ fun SettingScreen(navController: NavHostController, commonViewModel: CommonViewM
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Do you want to switch to list view", style = TextStyle(
-                    color = Color.Black,
+                    color =  if (isDarkTheme) Color.White else Color.Black,
                     fontSize = 15.sp,
                 )
             )
@@ -59,6 +59,26 @@ fun SettingScreen(navController: NavHostController, commonViewModel: CommonViewM
                 checked = isSwitchOn,
                 onCheckedChange = { newCheckedValue ->
                     commonViewModel.updateListView(newCheckedValue)
+                }
+            )
+
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Do you want to Dark theme", style = TextStyle(
+                    color = if (isDarkTheme) Color.White else Color.Black,
+                    fontSize = 15.sp,
+                )
+            )
+            Switch(
+                checked = isDarkTheme,
+                onCheckedChange = { newCheckedValue ->
+                    commonViewModel.updateTheme(newCheckedValue)
                 }
             )
 

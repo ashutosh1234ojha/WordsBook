@@ -53,6 +53,8 @@ var currentPage = 0
 @Composable
 fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewModel) {
     val myState by commonViewModel.score.collectAsState()
+    val isDarkTheme by commonViewModel.isDarkTheme.collectAsState()
+
 
     var firstFour by remember {
         mutableStateOf<List<Word>>(emptyList()) // Initial state
@@ -173,7 +175,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     QuizOption(
                         0,
                         option = listWordsNew?.get(0)?.meaning ?: "",
-                        word?.meaning ?: ""
+                        word?.meaning ?: "",isDarkTheme
                     ) {
                         handleQuizClick(0, selectedOption, commonViewModel, listWordsNew, word) {
                             coroutineScope.launch {
@@ -184,7 +186,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     QuizOption(
                         1,
                         option = listWordsNew?.get(1)?.meaning ?: "",
-                        word?.meaning ?: ""
+                        word?.meaning ?: "",isDarkTheme
                     ) {
                         handleQuizClick(
                             1,
@@ -204,7 +206,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     QuizOption(
                         2,
                         option = listWordsNew?.get(2)?.meaning ?: "",
-                        word?.meaning ?: ""
+                        word?.meaning ?: "",isDarkTheme
                     ) {
                         handleQuizClick(
                             2,
@@ -226,7 +228,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     QuizOption(
                         3,
                         option = listWordsNew?.get(3)?.meaning ?: "",
-                        word?.meaning ?: ""
+                        word?.meaning ?: "",isDarkTheme
                     ) {
                         handleQuizClick(
                             3,

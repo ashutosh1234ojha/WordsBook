@@ -38,7 +38,7 @@ import com.example.mywordsbook.db.Word
 @Composable
 fun WordListUI(
     modifier: Modifier = Modifier, // Modifier as Parameter
-    baseColor: Color = Color(0xFF088F8F),
+    isDarkTheme: Boolean = false,
     item: Word, onClick: (id: Int) -> Unit
 ) {
 
@@ -57,7 +57,7 @@ fun WordListUI(
                 Text(
                     text = item.wording,
                     fontSize = 18.sp,
-                    color = Color.Black,
+                    color = if (isDarkTheme) Color.White else Color.Black,
                     modifier = Modifier.weight(1f), style = TextStyle(fontWeight = FontWeight.Bold)
                 )
 
@@ -67,19 +67,23 @@ fun WordListUI(
                     Modifier
                         .clickable { onClick(item.id) }
                         .padding(10.dp),
-                    tint = Color.Black,
+                    tint = if (isDarkTheme) Color.White else Color.Black,
 
                     )
             }
 
-            Text(text = item.meaning, fontSize = 16.sp, color = Color.Black)
+            Text(
+                text = item.meaning,
+                fontSize = 16.sp,
+                color = if (isDarkTheme) Color.White else Color.Black
+            )
 
             Spacer(
                 modifier = Modifier
                     .padding(vertical = 10.dp)
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(Color.Black)
+                    .background(if (isDarkTheme) Color.White else Color.Black)
             )
         }
 
