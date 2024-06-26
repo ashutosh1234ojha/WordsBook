@@ -4,11 +4,14 @@ import androidx.compose.ui.graphics.Color
 
 
 //Dark
-val Dark_Primary = Color(0xFF000000)
+val Dark_Primary = Color(0xFFFFB951)
 val Dark_On_Primary = Color(0xFFFFFFFF)
 val Dark_Secondary = Color(0xFF191919)
 val Dark_Background = Color(0xFF000000)
 val Dark_On_Background = Color(0xFFFFFFFF)
+val Dark_On_Secondary = Color(0xFFFFFFFF)
+val Dark_On_Surface = Color(0xFFFFFFFF)
+
 
 //Light
 val Light_Primary = Color(0xFF4682B4)
@@ -16,6 +19,11 @@ val Light_On_Primary = Color(0xFF000000)
 val Light_Secondary = Color(0xFF588ebb)
 val Light_Background = Color(0xFFFFFFFF)
 val Light_On_Background = Color(0xFF000000)
+val Light_On_Secondary = Color(0xFF000000)
+val Light_On_Surface = Color(0xFF000000)
+//val md_theme_light_onSurface = Color(0xFF1F1B16)
+
+
 
 val Correct_Answer = Color(0xFFBFFFF1)
 
