@@ -43,12 +43,19 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     private val _isDarkTheme = MutableStateFlow(false)
     val isDarkTheme: StateFlow<Boolean> get() = _isDarkTheme
 
+    private var setting :Settings?=null
+
+
 
     init {
         viewModelScope.launch {
             settingDao?.getSetting()?.collect {
-                _isSwitchOn.value = it?.isCardView?:false
-                _isDarkTheme.value = it?.isDarkTheme?:false
+                setting=it
+                Log.d("Setting", "Setting carView ${it.hashCode()}")
+                Log.d("Setting", "Setting carView ${it?.isCardView}")
+                Log.d("Setting", "Setting dark ${it?.isDarkTheme}")
+                _isSwitchOn.value = it?.isCardView ?: false
+                _isDarkTheme.value = it?.isDarkTheme ?: false
             }
 
         }
@@ -164,15 +171,34 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
 
     fun updateListView(isCardView: Boolean) {
         viewModelScope.launch {
-            settingDao?.updateSetting(Settings(isCardView = isCardView, id = 1))
-            _isSwitchOn.value = isCardView
+            Log.d("Setting", "Card view update $isCardView}")
+
+            if(setting==null){
+
+                settingDao?.updateSetting(Settings(isCardView = isCardView, id = 1))
+                _isSwitchOn.value = isCardView
+            }else{
+                setting?.isCardView=isCardView
+                settingDao?.updateSetting(setting!!)
+                _isSwitchOn.value = isCardView
+            }
+
         }
     }
 
     fun updateTheme(isDarkTheme: Boolean) {
         viewModelScope.launch {
-            settingDao?.updateSetting(Settings(isDarkTheme=isDarkTheme, id = 1))
-            _isDarkTheme.value = isDarkTheme
+            Log.d("Setting", "dark update $isDarkTheme")
+
+            if(setting==null){
+                settingDao?.updateSetting(Settings(isDarkTheme = isDarkTheme, id = 1))
+                _isDarkTheme.value = isDarkTheme
+            }else{
+                setting?.isDarkTheme=isDarkTheme
+                settingDao?.updateSetting(setting!!)
+                _isDarkTheme.value = isDarkTheme
+            }
+
         }
     }
 
