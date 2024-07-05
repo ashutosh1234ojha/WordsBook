@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 
 }
 
@@ -99,7 +100,7 @@ dependencies {
 
     implementation ("androidx.compose.runtime:runtime-livedata:$compose_version")
     implementation ("androidx.navigation:navigation-compose:2.7.4")
-
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
 
 
 }
