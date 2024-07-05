@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.mywordsbook"
+    namespace = "com.mywordsbook"
     compileSdk = 34
 
     defaultConfig {

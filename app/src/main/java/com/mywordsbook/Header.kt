@@ -1,4 +1,4 @@
-package com.example.mywordsbook
+package com.mywordsbook
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

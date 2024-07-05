@@ -1,11 +1,11 @@
-package com.example.mywordsbook.di
+package com.mywordsbook.di
 
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.mywordsbook.db.Word
-import com.example.mywordsbook.db.WordDatabase
+import com.mywordsbook.db.Word
+import com.mywordsbook.db.WordDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

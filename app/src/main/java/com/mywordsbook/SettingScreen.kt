@@ -1,4 +1,4 @@
-package com.example.mywordsbook
+package com.mywordsbook
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.mywordsbook
+package com.mywordsbook
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,8 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.navOptions
-import com.example.mywordsbook.db.Word
-import com.example.mywordsbook.ui.theme.Correct_Answer
+import com.mywordsbook.db.Word
+import com.mywordsbook.ui.theme.Correct_Answer
 
 
 @Composable

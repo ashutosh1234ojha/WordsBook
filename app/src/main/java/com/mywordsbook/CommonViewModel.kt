@@ -1,4 +1,4 @@
-package com.example.mywordsbook
+package com.mywordsbook
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -6,11 +6,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mywordsbook.db.SettingDao
-import com.example.mywordsbook.db.Settings
-import com.example.mywordsbook.db.Word
-import com.example.mywordsbook.db.WordDao
-import com.example.mywordsbook.db.WordDatabase
+import com.mywordsbook.db.SettingDao
+import com.mywordsbook.db.Settings
+import com.mywordsbook.db.Word
+import com.mywordsbook.db.WordDao
+import com.mywordsbook.db.WordDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

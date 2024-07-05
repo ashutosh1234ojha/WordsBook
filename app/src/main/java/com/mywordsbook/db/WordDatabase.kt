@@ -1,4 +1,4 @@
-package com.example.mywordsbook.db
+package com.mywordsbook.db
 
 import android.content.Context
 import androidx.room.Database

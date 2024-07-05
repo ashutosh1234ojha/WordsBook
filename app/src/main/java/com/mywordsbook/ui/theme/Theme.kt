@@ -1,4 +1,4 @@
-package com.example.mywordsbook.ui.theme
+package com.mywordsbook.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme

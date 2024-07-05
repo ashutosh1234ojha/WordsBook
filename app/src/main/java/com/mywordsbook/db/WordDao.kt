@@ -1,4 +1,4 @@
-package com.example.mywordsbook.db
+package com.mywordsbook.db
 
 import androidx.room.Dao
 import androidx.room.Insert

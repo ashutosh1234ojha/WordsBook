@@ -1,4 +1,4 @@
-package com.example.mywordsbook.db
+package com.mywordsbook.db
 
 import android.os.Parcelable
 import androidx.room.Entity

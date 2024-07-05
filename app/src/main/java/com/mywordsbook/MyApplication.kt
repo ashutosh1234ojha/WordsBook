@@ -1,4 +1,4 @@
-package com.example.mywordsbook
+package com.mywordsbook
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

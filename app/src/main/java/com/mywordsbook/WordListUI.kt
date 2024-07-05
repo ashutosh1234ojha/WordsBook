@@ -1,4 +1,4 @@
-package com.example.mywordsbook
+package com.mywordsbook
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mywordsbook.db.Word
+import com.mywordsbook.db.Word
 
 
 @Composable

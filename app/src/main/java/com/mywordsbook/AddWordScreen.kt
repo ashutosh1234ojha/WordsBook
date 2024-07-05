@@ -1,6 +1,5 @@
-package com.example.mywordsbook
+package com.mywordsbook
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +23,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.mywordsbook.R
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
