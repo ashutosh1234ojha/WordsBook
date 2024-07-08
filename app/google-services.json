@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "345858559868",
-    "project_id": "mywordsbook-63729",
-    "storage_bucket": "mywordsbook-63729.appspot.com"
+    "project_number": "94873522350",
+    "project_id": "mywordsbook-20cf0",
+    "storage_bucket": "mywordsbook-20cf0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:345858559868:android:59f5e6aea6f54ff2051ef9",
+        "mobilesdk_app_id": "1:94873522350:android:ce81bb0dd8de5684eb9d3f",
         "android_client_info": {
           "package_name": "com.mywordsbook"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD1UpqKJOd_mhndznJrdqXVTH7voaJrudE"
+          "current_key": "AIzaSyBaz7DQs23pBfO-38Nk5yQoP9dKyBrAFa0"
         }
       ],
       "services": {

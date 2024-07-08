@@ -1,11 +1,16 @@
 package com.mywordsbook
 
+import android.os.Build
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.*
+import androidx.core.os.BuildCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.BuildConfig
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mywordsbook.db.SettingDao
 import com.mywordsbook.db.Settings
 import com.mywordsbook.db.Word
@@ -28,6 +33,7 @@ import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
+
 @HiltViewModel
 class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewModel() {
     private var dao: WordDao? = wordDatabase.wordDao()
@@ -43,14 +49,17 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     private val _isDarkTheme = MutableStateFlow(false)
     val isDarkTheme: StateFlow<Boolean> get() = _isDarkTheme
 
-    private var setting :Settings?=null
+    private var setting: Settings? = null
+    val db = Firebase.firestore
 
+    private val _currentVersion = MutableStateFlow(1)
+    val currentVersion: StateFlow<Int> get() = _currentVersion
 
 
     init {
         viewModelScope.launch {
             settingDao?.getSetting()?.collect {
-                setting=it
+                setting = it
                 Log.d("Setting", "Setting carView ${it.hashCode()}")
                 Log.d("Setting", "Setting carView ${it?.isCardView}")
                 Log.d("Setting", "Setting dark ${it?.isDarkTheme}")
@@ -62,6 +71,8 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
 
         getSavedWords(false)
         getQuizOptions()
+        //addCurrentVersion()
+        getCurrentVersion()
 
     }
 
@@ -173,12 +184,12 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
         viewModelScope.launch {
             Log.d("Setting", "Card view update $isCardView}")
 
-            if(setting==null){
+            if (setting == null) {
 
                 settingDao?.updateSetting(Settings(isCardView = isCardView, id = 1))
                 _isSwitchOn.value = isCardView
-            }else{
-                setting?.isCardView=isCardView
+            } else {
+                setting?.isCardView = isCardView
                 settingDao?.updateSetting(setting!!)
                 _isSwitchOn.value = isCardView
             }
@@ -190,16 +201,31 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
         viewModelScope.launch {
             Log.d("Setting", "dark update $isDarkTheme")
 
-            if(setting==null){
+            if (setting == null) {
                 settingDao?.updateSetting(Settings(isDarkTheme = isDarkTheme, id = 1))
                 _isDarkTheme.value = isDarkTheme
-            }else{
-                setting?.isDarkTheme=isDarkTheme
+            } else {
+                setting?.isDarkTheme = isDarkTheme
                 settingDao?.updateSetting(setting!!)
                 _isDarkTheme.value = isDarkTheme
             }
 
         }
     }
+
+    private fun getCurrentVersion() {
+        db.collection("Version")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("TAG", "${document.id} => ${document.data}")
+                    _currentVersion.value = (document.data["versionCode"].toString()).toInt()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("TAG", "Error getting documents.", exception)
+            }
+    }
+
 
 }
