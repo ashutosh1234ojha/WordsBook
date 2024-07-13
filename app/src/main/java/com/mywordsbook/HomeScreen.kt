@@ -38,6 +38,7 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
+
     var mutableList by remember {
         mutableStateOf<List<Word>>(emptyList()) // Initial state
     }
@@ -76,7 +77,7 @@ fun HomeScreen(
         )
     }
 
-    if (showVersionDialog > 1) {
+    if (showVersionDialog > BuildConfig.VERSION_CODE) {
         UpdateAlertDialog(onSelection = {
             val intent = Intent(
                 Intent.ACTION_VIEW,

@@ -26,7 +26,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.firestore.BuildConfig
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mywordsbook.data.BottomNavigationItem
@@ -42,7 +41,6 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BuildConfig.VERSION_NAME
         setContent {
             commonViewModel = ViewModelProvider(this)[CommonViewModel::class.java]
             val isDarkTheme by commonViewModel.isDarkTheme.collectAsState()

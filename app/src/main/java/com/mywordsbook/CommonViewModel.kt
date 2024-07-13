@@ -52,7 +52,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     private var setting: Settings? = null
     val db = Firebase.firestore
 
-    private val _currentVersion = MutableStateFlow(1)
+    private val _currentVersion = MutableStateFlow(com.mywordsbook.BuildConfig.VERSION_CODE)
     val currentVersion: StateFlow<Int> get() = _currentVersion
 
 
