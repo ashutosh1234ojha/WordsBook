@@ -1,16 +1,28 @@
 package com.mywordsbook
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -26,12 +38,20 @@ fun UpdateAlertDialog(
 
     Dialog(onDismissRequest = { onSelection() }) {
 
-        Box(
+        Card(
             modifier = Modifier
-                .background(Color.White)
-                .padding(10.dp)
-        ) {
-            Column {
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
+                .height(150.dp),
+
+            ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White), verticalArrangement = Arrangement.Center
+            ) {
+                Spacer(modifier = Modifier.height(20.dp))
+
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
@@ -41,7 +61,9 @@ fun UpdateAlertDialog(
                     )
 
                 )
-                TextButton(
+                Spacer(modifier = Modifier.height(80.dp))
+                TextButton(modifier = Modifier
+                    .background(Color.LightGray),
                     onClick = {
                         onSelection()
                     }
