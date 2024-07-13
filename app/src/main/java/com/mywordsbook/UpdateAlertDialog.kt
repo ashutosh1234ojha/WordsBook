@@ -36,7 +36,7 @@ fun UpdateAlertDialog(
     dialogText: String,
 ) {
 
-    Dialog(onDismissRequest = { onSelection() }) {
+    Dialog(onDismissRequest = { }) {
 
         Card(
             modifier = Modifier
