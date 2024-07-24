@@ -12,7 +12,20 @@
           "package_name": "com.mywordsbook"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "94873522350-1k41osmtg1s8ictg7l3i33q2ukm2luvn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mywordsbook",
+            "certificate_hash": "2ed0d22eeaff41bdd1a61c69e00efdc5271b0f1e"
+          }
+        },
+        {
+          "client_id": "94873522350-ifd1gko0unbe6m3oiofq9k9n8l3d3slg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBaz7DQs23pBfO-38Nk5yQoP9dKyBrAFa0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94873522350-ifd1gko0unbe6m3oiofq9k9n8l3d3slg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -1,8 +1,15 @@
 package com.mywordsbook
 
+import android.app.Activity
+import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
+import android.provider.Telephony.Mms.Intents
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -22,27 +29,42 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.firestore.ktx.firestore
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.mywordsbook.data.BottomNavigationItem
 import com.mywordsbook.ui.theme.MyWordsBookTheme
-import com.mywordsbook.AddWordScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import androidx.lifecycle.lifecycleScope
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var commonViewModel: CommonViewModel
+    private lateinit var auth: FirebaseAuth
+    private val googleAuthUiClient by lazy {
+        GoogleAuthUiClient(applicationContext, Identity.getSignInClient(applicationContext))
+    }
+
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             commonViewModel = ViewModelProvider(this)[CommonViewModel::class.java]
+            auth = Firebase.auth
             val isDarkTheme by commonViewModel.isDarkTheme.collectAsState()
 
 
@@ -58,7 +80,7 @@ class MainActivity : ComponentActivity() {
                     ),
                     BottomNavigationItem(
                         "Quiz",
-                       ImageVector.vectorResource(R.drawable.test_icon_outline),
+                        ImageVector.vectorResource(R.drawable.test_icon_outline),
                         ImageVector.vectorResource(R.drawable.test_icon),
                         "QuizScreen"
                     ),
@@ -77,25 +99,31 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
 
                     Scaffold(bottomBar = {
-                        NavigationBar {
-                            list.forEachIndexed { index, item ->
-                                NavigationBarItem(
-                                    selected = selectedItemIndex == index,
-                                    onClick = {
-                                        selectedItemIndex = index
-                                        navController.navigate(item.route)
+                        val navBackStackEntry by navController.currentBackStackEntryAsState()
+                        val currentRoute = navBackStackEntry?.destination?.route
+                        if (currentRoute != "LoginScreen") {
+                            NavigationBar {
 
-                                    },
-                                    label = { item.title },
-                                    icon = {
+                                list.forEachIndexed { index, item ->
+                                    NavigationBarItem(
+                                        selected = selectedItemIndex == index,
+                                        onClick = {
+                                            selectedItemIndex = index
+                                            navController.navigate(item.route)
 
-                                        Icon(
-                                            imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
-                                            contentDescription = item.title
-                                        )
-                                    })
+                                        },
+                                        label = { item.title },
+                                        icon = {
 
+                                            Icon(
+                                                imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
+                                                contentDescription = item.title
+                                            )
+                                        })
+
+                                }
                             }
+
                         }
                     })
                     { innerPadding ->
@@ -112,36 +140,85 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    private fun Host(commonViewModel: CommonViewModel, navController: NavHostController) {
+        NavHost(navController = navController, startDestination = "HomeScreen") {
+            composable("HomeScreen") {
+                HomeScreen(navController, commonViewModel)
+            }
 
-}
+            composable(
+                "QuizScreen"
+            ) {
+                QuizScreen(navController, commonViewModel)
+            }
+
+            composable(
+                "SettingScreen"
+            ) {
+                val state by commonViewModel.state.collectAsStateWithLifecycle()
+                val launcher =
+                    rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.StartIntentSenderForResult(),
+                        onResult = { result ->
+                            if (result.resultCode == Activity.RESULT_OK) {
+
+//                            lifecycleScope.launch {  }
+                                lifecycleScope.launch {
+                                    val signInResult = googleAuthUiClient.signInWithIntent(
+                                        intent = result.data ?: return@launch
+                                    )
+
+                                    commonViewModel.onSignInResult(signInResult)
+                                }
+
+                            }
+                        })
+                SettingScreen(
+                    navController,
+                    commonViewModel,
+                    googleAuthUiClient.getSignedInUser(),
+                    {
+                        lifecycleScope.launch {
+                            val signInIntentSender = googleAuthUiClient.signIn()
+                            launcher.launch(
+                                IntentSenderRequest.Builder(signInIntentSender!!).build()
+                            )
+                        }
+                    }) {
+                    lifecycleScope.launch {
+                        googleAuthUiClient.signOut()
+                        navController.popBackStack()
+
+                    }
+                }
+            }
+            composable(
+                "AddWordScreen"
+            ) {
+                AddWordScreen(navController, commonViewModel)
+            }
+            composable(
+                "LoginScreen"
+            ) {
 
 
-@Composable
-private fun Host(commonViewModel: CommonViewModel, navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "HomeScreen") {
-        composable("HomeScreen") {
-            HomeScreen(navController, commonViewModel)
-        }
+//                LoginScreen(state = state, onSignInClick = {
+//                    lifecycleScope.launch {
+//                        val signInIntentSender = googleAuthUiClient.signIn()
+//                        launcher.launch(IntentSenderRequest.Builder(signInIntentSender!!).build())
+//                    }
+//                })
 
-        composable(
-            "QuizScreen"
-        ) {
-            QuizScreen(navController, commonViewModel)
-        }
+            }
 
-        composable(
-            "SettingScreen"
-        ) {
-            SettingScreen(navController, commonViewModel)
-        }
-        composable(
-            "AddWordScreen"
-        ) {
-            AddWordScreen(navController, commonViewModel)
+//            LoginScreen(navController, commonViewModel)
         }
 
 
     }
+
+
 }
 
 

@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.mywordsbook"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.mywordsbook"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -66,6 +66,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose-android:2.8.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -87,7 +88,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
 
     val compose_version = "1.0.0-beta01"
-    val nav_compose_version = "2.7.2"
+    val nav_compose_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_compose_version")
 
     implementation("com.google.dagger:hilt-android:2.48")
@@ -103,6 +104,40 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-firestore")
+
+    implementation ("com.firebaseui:firebase-ui-auth:7.2.0")
+    implementation ("androidx.compose.material:material:1.6.8")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth")
+
+//    implementation("androidx.credentials:credentials:1.2.2")
+
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+//    implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
+
+//    implementation ("com.google.android.libraries.identity.googleid:googleid:1.2.2")
+    implementation ("androidx.credentials:credentials:1.2.2")
+    implementation ("androidx.credentials:credentials-play-services-auth:1.2.2")
+//    implementation ("com.google.android.libraries.identity.googleid:googleid:1.5.0-alpha02")
+
+//    implementation("androidx.credentials:credentials:1.5.0-alpha02")
+//    implementation("androidx.credentials:credentials-play-services-auth:1.5.0-alpha02")
+
+//    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+
+    implementation("io.coil-kt:coil-compose:2.2.2")
+
+
+
+
+
 
 
 }

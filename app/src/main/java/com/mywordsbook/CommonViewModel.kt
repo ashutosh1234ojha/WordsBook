@@ -22,9 +22,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.update
 
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -55,6 +57,9 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     private val _currentVersion = MutableStateFlow(com.mywordsbook.BuildConfig.VERSION_CODE)
     val currentVersion: StateFlow<Int> get() = _currentVersion
 
+    private val _state = MutableStateFlow(SignInState())
+    val state = _state.asStateFlow()
+
 
     init {
         viewModelScope.launch {
@@ -74,6 +79,19 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
         //addCurrentVersion()
         getCurrentVersion()
 
+    }
+
+    fun onSignInResult(result: SignInResult) {
+
+        _state.update {
+            it.copy(
+                isSignInSuccessful = result.data != null, signInError = result.errorMessage
+            )
+        }
+    }
+
+    fun resetState() {
+        _state.update { SignInState() }
     }
 
     fun getSavedWords(isShuffled: Boolean) {
