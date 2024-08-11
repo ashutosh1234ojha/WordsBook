@@ -46,6 +46,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import androidx.lifecycle.lifecycleScope
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.await
+import java.util.concurrent.TimeUnit
 
 
 @AndroidEntryPoint
@@ -61,6 +70,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         setContent {
             commonViewModel = ViewModelProvider(this)[CommonViewModel::class.java]
@@ -168,6 +178,8 @@ class MainActivity : ComponentActivity() {
                                     val signInResult = googleAuthUiClient.signInWithIntent(
                                         intent = result.data ?: return@launch
                                     )
+                                    scheduleSync()
+
 
                                     commonViewModel.onSignInResult(signInResult)
                                 }
@@ -216,6 +228,27 @@ class MainActivity : ComponentActivity() {
         }
 
 
+    }
+
+    fun scheduleSync() {
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresCharging(false)
+            .build()
+
+        val data = Data.Builder().putString("User_id", googleAuthUiClient.getSignedInUser()?.userId)
+            .build()
+
+        val syncWorkRequest =
+            PeriodicWorkRequestBuilder<NetworkCallWorkManager>(1, TimeUnit.SECONDS)
+                .setConstraints(constraints)
+                .setInputData(data)
+                .build()
+
+        WorkManager.getInstance(this).enqueue(
+            syncWorkRequest
+        )
     }
 
 
