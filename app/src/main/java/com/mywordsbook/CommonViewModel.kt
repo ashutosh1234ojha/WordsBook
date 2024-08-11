@@ -147,7 +147,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
                     )
                 )
             } else {
-                selectedWord?.apply {
+                selectedWord?.apply {isSynced=false
                     meaning = _meaning
                     wording = _word
                     isImportant = _isImportant
