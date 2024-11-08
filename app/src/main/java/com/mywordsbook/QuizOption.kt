@@ -78,7 +78,7 @@ fun QuizOption(
                     text = option,
                     style = TextStyle(
                         textAlign = TextAlign.Center,
-                        color = if (isDarkTheme) Color.White else Color.Black
+                        color =  Color.White
                     )
                 )
             }
