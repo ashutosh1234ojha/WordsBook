@@ -192,10 +192,13 @@ class MainActivity : ComponentActivity() {
                     googleAuthUiClient.getSignedInUser(),
                     {
                         lifecycleScope.launch {
-                            val signInIntentSender = googleAuthUiClient.signIn()
-                            launcher.launch(
-                                IntentSenderRequest.Builder(signInIntentSender!!).build()
-                            )
+                            googleAuthUiClient.signIn()?.let {
+                                launcher.launch(
+                                    IntentSenderRequest.Builder(it).build()
+                                )
+                            }
+
+
                         }
                     }) {
                     lifecycleScope.launch {
