@@ -191,6 +191,7 @@ class MainActivity : ComponentActivity() {
                     commonViewModel,
                     googleAuthUiClient.getSignedInUser(),
                     {
+                        //Todo
                         lifecycleScope.launch {
                             googleAuthUiClient.signIn()?.let {
                                 launcher.launch(
