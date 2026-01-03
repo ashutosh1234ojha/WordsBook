@@ -1,16 +1,12 @@
 package com.mywordsbook
 
 import android.app.Activity
-import android.content.Intent
-import android.content.IntentSender
 import android.os.Bundle
-import android.provider.Telephony.Mms.Intents
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
@@ -21,10 +17,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,18 +37,17 @@ import com.google.firebase.ktx.Firebase
 import com.mywordsbook.data.BottomNavigationItem
 import com.mywordsbook.ui.theme.MyWordsBookTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
 import androidx.work.Data
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.await
 import java.util.concurrent.TimeUnit
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
 
 
 @AndroidEntryPoint
@@ -69,6 +62,8 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+
         super.onCreate(savedInstanceState)
 
 
@@ -106,53 +101,55 @@ class MainActivity : ComponentActivity() {
             }
 
             MyWordsBookTheme(isDarkTheme) {
-                Surface(modifier = Modifier.fillMaxSize()) {
+                Scaffold(bottomBar = {
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    val currentRoute = navBackStackEntry?.destination?.route
+                    if (currentRoute != "LoginScreen") {
+                        NavigationBar {
 
-                    Scaffold(bottomBar = {
-                        val navBackStackEntry by navController.currentBackStackEntryAsState()
-                        val currentRoute = navBackStackEntry?.destination?.route
-                        if (currentRoute != "LoginScreen") {
-                            NavigationBar {
+                            list.forEachIndexed { index, item ->
+                                NavigationBarItem(
+                                    selected = selectedItemIndex == index,
+                                    onClick = {
+                                        selectedItemIndex = index
+                                        navController.navigate(item.route)
 
-                                list.forEachIndexed { index, item ->
-                                    NavigationBarItem(
-                                        selected = selectedItemIndex == index,
-                                        onClick = {
-                                            selectedItemIndex = index
-                                            navController.navigate(item.route)
+                                    },
+                                    label = { item.title },
+                                    icon = {
 
-                                        },
-                                        label = { item.title },
-                                        icon = {
+                                        Icon(
+                                            imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
+                                            contentDescription = item.title
+                                        )
+                                    })
 
-                                            Icon(
-                                                imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
-                                                contentDescription = item.title
-                                            )
-                                        })
-
-                                }
                             }
-
                         }
-                    })
-                    { innerPadding ->
-                        val a = innerPadding
-                        Host(commonViewModel = commonViewModel, navController)
 
                     }
-
+                })
+                { innerPadding ->
+                    Host(commonViewModel = commonViewModel, navController, innerPadding)
 
                 }
 
-            }
 
+            }
         }
     }
 
     @Composable
-    private fun Host(commonViewModel: CommonViewModel, navController: NavHostController) {
-        NavHost(navController = navController, startDestination = "HomeScreen") {
+    private fun Host(
+        commonViewModel: CommonViewModel,
+        navController: NavHostController,
+        innerPadding: PaddingValues
+    ) {
+        NavHost(
+            modifier = Modifier.padding(innerPadding),
+            navController = navController,
+            startDestination = "HomeScreen"
+        ) {
             composable("HomeScreen") {
                 HomeScreen(navController, commonViewModel)
             }

@@ -71,7 +71,7 @@ dependencies {
         implementation("androidx.compose.ui:ui-graphics")
         implementation("androidx.compose.ui:ui-tooling-preview")
         implementation("androidx.compose.material3:material3")
-        implementation("androidx.appcompat:appcompat:1.6.1")
+        implementation("androidx.appcompat:appcompat:1.7.1")
         implementation("androidx.lifecycle:lifecycle-runtime-compose-android:2.8.3")
         implementation("com.google.firebase:firebase-crashlytics-buildtools:3.0.2")
         testImplementation("junit:junit:4.13.2")
