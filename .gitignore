@@ -1,7 +1,7 @@
 app/test.java
 .gradle/file-system.probe
 .idea/modules.xml
-.idea/modules/
+.idea/
 app/build/
 .gradle/
 
