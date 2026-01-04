@@ -16,24 +16,22 @@ val fontFamily= FontFamily(
 
 val defaultTextStyle= TextStyle(
     fontFamily = fontFamily,
-    fontWeight = FontWeight.Normal,
     )
 
+//
 val myWordBookTypography = Typography(
+    titleLarge = TextStyle(
+        fontSize = 22.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.sp
+    ),
     bodyLarge = defaultTextStyle.copy(
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 50.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     )
-//    /* Other default text styles to override
-//    titleLarge = TextStyle(
-//        fontFamily = FontFamily.Default,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 22.sp,
-//        lineHeight = 28.sp,
-//        letterSpacing = 0.sp
-//    ),
+
+   ,
 //    labelSmall = TextStyle(
 //        fontFamily = FontFamily.Default,
 //        fontWeight = FontWeight.Medium,

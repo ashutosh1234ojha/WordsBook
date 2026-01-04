@@ -56,13 +56,13 @@ fun AddWordScreen(
         }
         OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = word, onValueChange = {
             word = it
-        }, label = { Text(text = "Enter word", style = MaterialTheme.typography.bodyLarge) }
+        }, label = { Text(text = "Enter word",  style = MaterialTheme.typography.titleLarge) }
         )
 
         OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = meaning, onValueChange = {
             meaning = it
 
-        }, label = { Text(text = "Enter Meaning") }
+        }, label = { Text(text = "Enter Meaning",style = MaterialTheme.typography.bodyLarge) }
         )
 
         Row(
