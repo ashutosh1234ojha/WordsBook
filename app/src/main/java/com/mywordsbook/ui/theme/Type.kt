@@ -18,7 +18,7 @@ val defaultTextStyle= TextStyle(
     fontFamily = fontFamily,
     )
 
-//
+// set
 val myWordBookTypography = Typography(
     titleLarge = TextStyle(
         fontSize = 22.sp,
