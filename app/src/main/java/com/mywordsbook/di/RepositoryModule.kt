@@ -36,7 +36,7 @@ object RepositoryModule {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
 //
-                        //
+
                         val words = listOf(
                             Word(
                                 wording = "One",
