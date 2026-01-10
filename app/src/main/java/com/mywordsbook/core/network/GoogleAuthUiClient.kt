@@ -1,4 +1,4 @@
-package com.mywordsbook
+package com.mywordsbook.core.network
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,9 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.mywordsbook.R
+import com.mywordsbook.login.SignInResult
+import com.mywordsbook.login.UserData
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 

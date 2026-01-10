@@ -1,4 +1,4 @@
-package com.mywordsbook
+package com.mywordsbook.login
 
 data class SignInResult(
     val data: UserData?,

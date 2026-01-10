@@ -1,6 +1,7 @@
-package com.mywordsbook
+package com.mywordsbook.core.utils
 
 import androidx.compose.ui.graphics.Color
+import kotlin.math.abs
 
 fun Color.toHsl(): FloatArray {
     val redComponent = red
@@ -35,8 +36,8 @@ fun Color.toHsl(): FloatArray {
 }
 
 fun hslToColor(hue: Float, saturation: Float, lightness: Float): Color {
-    val chroma = (1 - kotlin.math.abs(2 * lightness - 1)) * saturation
-    val secondaryColorComponent = chroma * (1 - kotlin.math.abs((hue / 60) % 2 - 1))
+    val chroma = (1 - abs(2 * lightness - 1)) * saturation
+    val secondaryColorComponent = chroma * (1 - abs((hue / 60) % 2 - 1))
     val matchValue = lightness - chroma / 2
 
     var red = matchValue

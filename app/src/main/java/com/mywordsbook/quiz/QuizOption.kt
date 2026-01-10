@@ -1,4 +1,4 @@
-package com.mywordsbook
+package com.mywordsbook.quiz
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,8 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.navOptions
-import com.mywordsbook.db.Word
+import com.mywordsbook.R
 import com.mywordsbook.ui.theme.Correct_Answer
 
 

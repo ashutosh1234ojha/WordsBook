@@ -1,4 +1,4 @@
-package com.mywordsbook
+package com.mywordsbook.core.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,6 +20,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mywordsbook.R
 
 @Composable
 fun Header(

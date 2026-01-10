@@ -1,4 +1,4 @@
-package com.mywordsbook
+package com.mywordsbook.quiz
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -14,11 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,6 +41,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.mywordsbook.core.viewmodel.CommonViewModel
 import com.mywordsbook.db.Word
 import kotlinx.coroutines.launch
 
@@ -93,7 +91,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(colorResource(id = R.color.primary))
+                .background(colorResource(id = _root_ide_package_.com.mywordsbook.R.color.primary))
                 .padding(20.dp)
                 .padding(10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -175,7 +173,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     QuizOption(
                         0,
                         option = listWordsNew?.get(0)?.meaning ?: "",
-                        word?.meaning ?: "",isDarkTheme
+                        word?.meaning ?: "", isDarkTheme
                     ) {
                         handleQuizClick(0, selectedOption, commonViewModel, listWordsNew, word) {
                             coroutineScope.launch {
@@ -186,7 +184,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     QuizOption(
                         1,
                         option = listWordsNew?.get(1)?.meaning ?: "",
-                        word?.meaning ?: "",isDarkTheme
+                        word?.meaning ?: "", isDarkTheme
                     ) {
                         handleQuizClick(
                             1,
@@ -206,7 +204,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     QuizOption(
                         2,
                         option = listWordsNew?.get(2)?.meaning ?: "",
-                        word?.meaning ?: "",isDarkTheme
+                        word?.meaning ?: "", isDarkTheme
                     ) {
                         handleQuizClick(
                             2,
@@ -228,7 +226,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                     QuizOption(
                         3,
                         option = listWordsNew?.get(3)?.meaning ?: "",
-                        word?.meaning ?: "",isDarkTheme
+                        word?.meaning ?: "", isDarkTheme
                     ) {
                         handleQuizClick(
                             3,
@@ -251,7 +249,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
         } else {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
-                    painterResource(R.drawable.add_more_words),
+                    painterResource(_root_ide_package_.com.mywordsbook.R.drawable.add_more_words),
                     contentDescription = "Shuffle",
                     modifier = Modifier
                         .width(100.dp)

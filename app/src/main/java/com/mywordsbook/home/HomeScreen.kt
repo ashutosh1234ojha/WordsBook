@@ -1,10 +1,9 @@
-package com.mywordsbook
+package com.mywordsbook.home
 
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,6 +25,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
+import com.mywordsbook.BuildConfig
+import com.mywordsbook.core.viewmodel.CommonViewModel
+import com.mywordsbook.core.ui.CustomAlertDialog
+import com.mywordsbook.core.ui.Header
+import com.mywordsbook.core.ui.UpdateAlertDialog
 import com.mywordsbook.db.Word
 
 

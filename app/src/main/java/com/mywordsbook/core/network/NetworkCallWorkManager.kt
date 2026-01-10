@@ -1,26 +1,18 @@
-package com.mywordsbook
+package com.mywordsbook.core.network
 
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
-import androidx.work.Data
-import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mywordsbook.db.Word
 import com.mywordsbook.db.WordDatabase
 import com.mywordsbook.db.toWordBackend
 import com.mywordsbook.di.RepositoryModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
-import kotlinx.coroutines.withContext
-
-import javax.inject.Inject
 
 
 class NetworkCallWorkManager(

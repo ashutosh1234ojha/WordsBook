@@ -1,4 +1,4 @@
-package com.mywordsbook
+package com.mywordsbook.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.mywordsbook.core.viewmodel.CommonViewModel
 import com.mywordsbook.R
 
 

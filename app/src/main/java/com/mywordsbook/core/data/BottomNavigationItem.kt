@@ -1,4 +1,4 @@
-package com.mywordsbook.data
+package com.mywordsbook.core.data
 
 import android.graphics.drawable.VectorDrawable
 import androidx.compose.ui.graphics.vector.ImageVector

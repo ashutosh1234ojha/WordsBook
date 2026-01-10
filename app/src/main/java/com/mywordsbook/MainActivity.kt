@@ -34,7 +34,7 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.mywordsbook.data.BottomNavigationItem
+import com.mywordsbook.core.data.BottomNavigationItem
 import com.mywordsbook.ui.theme.MyWordsBookTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,6 +48,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import com.mywordsbook.core.network.GoogleAuthUiClient
+import com.mywordsbook.core.network.NetworkCallWorkManager
+import com.mywordsbook.core.viewmodel.CommonViewModel
+import com.mywordsbook.home.AddWordScreen
+import com.mywordsbook.home.HomeScreen
+import com.mywordsbook.quiz.QuizScreen
+import com.mywordsbook.setting.SettingScreen
 
 
 @AndroidEntryPoint

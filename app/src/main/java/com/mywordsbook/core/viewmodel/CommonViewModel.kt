@@ -1,40 +1,31 @@
-package com.mywordsbook
+package com.mywordsbook.core.viewmodel
 
-import android.os.Build
 import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.*
-import androidx.core.os.BuildCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.firestore.BuildConfig
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.mywordsbook.BuildConfig
 import com.mywordsbook.db.SettingDao
 import com.mywordsbook.db.Settings
 import com.mywordsbook.db.Word
 import com.mywordsbook.db.WordDao
 import com.mywordsbook.db.WordDatabase
+import com.mywordsbook.login.SignInResult
+import com.mywordsbook.login.SignInState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.flow.update
-
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Collections
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
-
 
 @HiltViewModel
 class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewModel() {
@@ -54,7 +45,7 @@ class CommonViewModel @Inject constructor(wordDatabase: WordDatabase) : ViewMode
     private var setting: Settings? = null
     val db = Firebase.firestore
 
-    private val _currentVersion = MutableStateFlow(com.mywordsbook.BuildConfig.VERSION_CODE)
+    private val _currentVersion = MutableStateFlow(BuildConfig.VERSION_CODE)
     val currentVersion: StateFlow<Int> get() = _currentVersion
 
     private val _state = MutableStateFlow(SignInState())
