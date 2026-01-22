@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 
@@ -52,7 +54,7 @@ fun SettingScreen(
 
     ) {
         Header(
-            headerText = "Setting Screen"
+            headerText = stringResource(R.string.setting_screen)
         )
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -60,7 +62,7 @@ fun SettingScreen(
         if (userData?.profilePictureUrl != null) {
             AsyncImage(
                 model = userData.profilePictureUrl,
-                contentDescription = "Profile image",
+                contentDescription = stringResource(R.string.profile_image),
                 modifier = Modifier
                     .size(150.dp)
                     .clip(CircleShape), contentScale = ContentScale.Crop
@@ -68,7 +70,7 @@ fun SettingScreen(
         } else {
             AsyncImage(
                 model = R.drawable.baseline_person_24,
-                contentDescription = "Profile image",
+                contentDescription = stringResource(R.string.profile_image),
                 modifier = Modifier
                     .size(150.dp)
                     .clip(CircleShape)
@@ -81,20 +83,16 @@ fun SettingScreen(
         if (userData?.username != null) {
             Text(
                 text = userData.username,
-                style = TextStyle(
-                    color = if (isDarkTheme) Color.White else Color.Black,
-                    fontSize = 15.sp, fontWeight = FontWeight.SemiBold
-                ),
+                style = MaterialTheme.typography.labelLarge.copy(color = if (isDarkTheme) Color.White else Color.Black)
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
                 modifier = Modifier.clickable {
                     signOut()
                 },
-                text = "Sign Out", style = TextStyle(
-                    color = if (isDarkTheme) Color.White else Color.Black,
-                    fontSize = 15.sp, fontWeight = FontWeight.SemiBold
-                )
+                text = stringResource(R.string.sign_out),
+                style = MaterialTheme.typography.labelLarge.copy(color = if (isDarkTheme) Color.White else Color.Black)
+
 
             )
         } else {
@@ -102,10 +100,9 @@ fun SettingScreen(
                 modifier = Modifier.clickable {
                     signIn()
                 },
-                text = "Sign In", style = TextStyle(
-                    color = if (isDarkTheme) Color.White else Color.Black,
-                    fontSize = 15.sp, fontWeight = FontWeight.SemiBold
-                )
+                text = stringResource(R.string.sign_in),
+                style = MaterialTheme.typography.labelLarge.copy(color = if (isDarkTheme) Color.White else Color.Black)
+
             )
         }
 
@@ -120,10 +117,9 @@ fun SettingScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Do you want to switch to list view", style = TextStyle(
-                    color = if (isDarkTheme) Color.White else Color.Black,
-                    fontSize = 15.sp,
-                )
+                text = stringResource(R.string.do_you_want_to_switch_to_list_view),
+                style = MaterialTheme.typography.labelLarge.copy(color = if (isDarkTheme) Color.White else Color.Black)
+
             )
             Switch(
                 checked = isSwitchOn,
@@ -142,10 +138,9 @@ fun SettingScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Do you want to Dark theme", style = TextStyle(
-                    color = if (isDarkTheme) Color.White else Color.Black,
-                    fontSize = 15.sp,
-                )
+                text = stringResource(R.string.do_you_want_to_dark_theme),
+                style = MaterialTheme.typography.labelLarge.copy(color = if (isDarkTheme) Color.White else Color.Black)
+
             )
             Switch(
                 checked = isDarkTheme,

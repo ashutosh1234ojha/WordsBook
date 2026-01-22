@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,9 +47,11 @@ fun WordListUI(
             ) {
                 Text(
                     text = item.wording,
-                    fontSize = 18.sp,
-                    color = if (isDarkTheme) Color.White else Color.Black,
-                    modifier = Modifier.weight(1f), style = TextStyle(fontWeight = FontWeight.Bold)
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = if (isDarkTheme) Color.White else Color.Black
+                    ),
+                    modifier = Modifier.weight(1f),
                 )
 
                 Icon(
@@ -64,8 +67,9 @@ fun WordListUI(
 
             Text(
                 text = item.meaning,
-                fontSize = 16.sp,
-                color = if (isDarkTheme) Color.White else Color.Black
+                style = MaterialTheme.typography.labelLarge.copy(
+                    color = if (isDarkTheme) Color.White else Color.Black
+                ),
             )
 
             Spacer(

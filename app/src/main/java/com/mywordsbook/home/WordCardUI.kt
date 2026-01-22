@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,9 +60,8 @@ fun WordCardUI(
                 ) {
                     Text(
                         text = item.wording,
-                        fontSize = 18.sp,
-                        color = Color.White,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.labelLarge.copy(color =Color.White )
                     )
 
                     Icon(
@@ -75,7 +75,9 @@ fun WordCardUI(
                         )
                 }
 
-                Text(text = item.meaning, fontSize = 16.sp, color = Color.White)
+                Text(
+                    text = item.meaning, style = MaterialTheme.typography.labelLarge.copy(color =Color.White )
+                )
             }
 
         }

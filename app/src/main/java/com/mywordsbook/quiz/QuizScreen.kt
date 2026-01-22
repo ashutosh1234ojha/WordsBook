@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -41,6 +43,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.mywordsbook.R
 import com.mywordsbook.core.viewmodel.CommonViewModel
 import com.mywordsbook.db.Word
 import kotlinx.coroutines.launch
@@ -104,20 +107,14 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                         pagerState.animateScrollToPage(currentPage - 1)
                     }
                 },
-                text = "Previous",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontSize = 20.sp
-                )
+                text = stringResource(R.string.previous),
+                style = MaterialTheme.typography.titleLarge.copy(color = Color.White)
+
             )
             Text(
-                text = "Score $myState",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Green,
-                    fontSize = 40.sp
-                )
+                text = stringResource(R.string.score, myState),
+                style = MaterialTheme.typography.displaySmall.copy(color = Color.Green)
+
             )
             Text(
                 modifier = Modifier.clickable {
@@ -125,12 +122,9 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                         pagerState.animateScrollToPage(currentPage + 1)
                     }
                 },
-                text = "Next",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontSize = 20.sp
-                )
+                text = stringResource(R.string.next),
+                style = MaterialTheme.typography.titleLarge.copy(color = Color.White)
+
             )
         }
         if (firstFour.size >= 4) {
@@ -149,7 +143,7 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
                         Text(
                             modifier = Modifier.fillMaxWidth(),
                             text = buildAnnotatedString {
-                                append("What the meaning of ")
+                                append(stringResource(R.string.what_the_meaning_of))
                                 withStyle(
                                     style = SpanStyle(
                                         color = Color.Blue,
@@ -250,18 +244,19 @@ fun QuizScreen(navController: NavHostController, commonViewModel: CommonViewMode
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
                     painterResource(_root_ide_package_.com.mywordsbook.R.drawable.add_more_words),
-                    contentDescription = "Shuffle",
+                    contentDescription = stringResource(R.string.shuffle),
                     modifier = Modifier
                         .width(100.dp)
                         .height(100.dp)
                 )
 
                 Text(
-                    text = "Please add at least four words for\n the quiz", style = TextStyle(
-                        fontWeight = FontWeight.Bold,
+                    text = stringResource(R.string.please_add_at_least_four_words_for_the_quiz),
+                    style = MaterialTheme.typography.titleLarge.copy(
                         color = Color.Black,
-                        fontSize = 20.sp, textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center
                     )
+
                 )
             }
 

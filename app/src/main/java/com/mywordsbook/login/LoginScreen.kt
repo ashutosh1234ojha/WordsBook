@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -52,8 +53,9 @@ fun LoginScreen(state: SignInState, onSignInClick: () -> Unit) {
         Spacer(modifier = Modifier.height(20.dp))
 
 
-        TextButton(modifier = Modifier
-            .background(Color.LightGray),
+        TextButton(
+            modifier = Modifier
+                .background(Color.LightGray),
             onClick = {
                 onSignInClick()
                 //    navController.navigate("HomeScreen")
@@ -65,9 +67,8 @@ fun LoginScreen(state: SignInState, onSignInClick: () -> Unit) {
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
-                style = TextStyle(
-                    color = Black
-                ), text = "Google Login"
+                text = "Google Login",
+                style = MaterialTheme.typography.labelLarge.copy(color = Color.Black)
             )
         }
     }
