@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">MyWordsBook</string>
     <string name="web_client_id">94873522350-ifd1gko0unbe6m3oiofq9k9n8l3d3slg.apps.googleusercontent.com</string>
+    <string name="enter_word">Enter word</string>
+    <string name="enter_meaning">Enter Meaning</string>
+    <string name="save">Save</string>
+    <string name="important">Important</string>
+    <string name="delete">Delete</string>
+    <string name="loading_please_wait">Loading.. Please wait..</string>
+    <string name="previous">Previous</string>
+    <string name="score">Score %1$d</string>
+    <string name="next">Next</string>
+    <string name="what_the_meaning_of">"What the meaning of "</string>
+    <string name="please_add_at_least_four_words_for_the_quiz">Please add at least four words for\n the quiz</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="profile_image">Profile image</string>
+    <string name="setting_screen">Setting Screen</string>
+    <string name="sign_in">Sign In</string>
+    <string name="do_you_want_to_switch_to_list_view">Do you want to switch to list view</string>
+    <string name="do_you_want_to_dark_theme">Do you want to Dark theme</string>
 </resources>

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,11 +51,7 @@ fun QuizOption(
         ) {
             Text(
                 text = "${number + 1}.",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center
-                )
+                style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center)
             )
             Card(
                 modifier = Modifier
@@ -75,10 +72,11 @@ fun QuizOption(
                         .clip(shape = RoundedCornerShape(50.dp))
                         .padding(10.dp),
                     text = option,
-                    style = TextStyle(
+                    style = MaterialTheme.typography.titleLarge.copy(
                         textAlign = TextAlign.Center,
-                        color =  Color.White
+                        color = Color.White
                     )
+
                 )
             }
         }

@@ -119,7 +119,9 @@ dependencies {
         implementation("com.google.firebase:firebase-firestore")
 
         implementation("com.firebaseui:firebase-ui-auth:7.2.0")
-        implementation("androidx.compose.material:material:1.6.8")
+//        implementation("androidx.compose.material:material:1.6.8")
+        implementation("androidx.compose.material3:material3:1.4.0")
+
         implementation("com.google.android.gms:play-services-auth:21.2.0")
 
         // Import the BoM for the Firebase platform

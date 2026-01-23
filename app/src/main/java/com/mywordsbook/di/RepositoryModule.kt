@@ -35,6 +35,7 @@ object RepositoryModule {
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
+//
 
                         val words = listOf(
                             Word(

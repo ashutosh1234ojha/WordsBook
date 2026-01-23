@@ -21,6 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -57,13 +58,13 @@ fun AddWordScreen(
         }
         OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = word, onValueChange = {
             word = it
-        }, label = { Text(text = "Enter word",  style = MaterialTheme.typography.titleLarge) }
+        }, label = { Text(text = stringResource(R.string.enter_word),  style = MaterialTheme.typography.labelLarge) }
         )
 
         OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = meaning, onValueChange = {
             meaning = it
 
-        }, label = { Text(text = "Enter Meaning",style = MaterialTheme.typography.bodyLarge) }
+        }, label = { Text(text = stringResource(R.string.enter_meaning),style = MaterialTheme.typography.labelLarge) }
         )
 
         Row(
@@ -78,14 +79,14 @@ fun AddWordScreen(
                 navController.popBackStack()
 
             }) {
-                Text(text = "Save")
+                Text(text = stringResource(R.string.save),style = MaterialTheme.typography.labelLarge)
             }
             IconButton(onClick = {
                 isImportant = !isImportant
             }) {
                 Image(
                     painterResource(if (isImportant) R.drawable.baseline_star_24 else R.drawable.baseline_star_outline_24),
-                    contentDescription = "Important",
+                    contentDescription = stringResource(R.string.important),
                     modifier = Modifier
                         .width(24.dp)
                         .height(24.dp)
@@ -96,7 +97,7 @@ fun AddWordScreen(
                 navController.popBackStack()
 
             }) {
-                Text(text = "Delete")
+                Text(text = stringResource(R.string.delete),style = MaterialTheme.typography.labelLarge)
             }
         }
 
