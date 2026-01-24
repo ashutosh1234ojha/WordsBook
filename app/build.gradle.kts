@@ -121,6 +121,8 @@ dependencies {
         implementation("com.firebaseui:firebase-ui-auth:7.2.0")
 //        implementation("androidx.compose.material:material:1.6.8")
         implementation("androidx.compose.material3:material3:1.4.0")
+        implementation("androidx.compose.material:material-icons-core:1.7.8")
+
 
         implementation("com.google.android.gms:play-services-auth:21.2.0")
 
@@ -152,6 +154,11 @@ dependencies {
 
         val work_version = "2.9.0"
         implementation("androidx.work:work-runtime-ktx:$work_version")
+
+          implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
+        implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+
 
 
     }

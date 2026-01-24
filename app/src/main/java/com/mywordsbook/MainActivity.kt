@@ -7,11 +7,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -47,6 +42,11 @@ import java.util.concurrent.TimeUnit
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.Modifier
 import com.mywordsbook.core.network.GoogleAuthUiClient
 import com.mywordsbook.core.network.NetworkCallWorkManager
@@ -61,10 +61,10 @@ import com.mywordsbook.setting.SettingScreen
 class MainActivity : ComponentActivity() {
 
     private lateinit var commonViewModel: CommonViewModel
-    private lateinit var auth: FirebaseAuth
-    private val googleAuthUiClient by lazy {
-        GoogleAuthUiClient(applicationContext, Identity.getSignInClient(applicationContext))
-    }
+//    private lateinit var auth: FirebaseAuth
+//    private val googleAuthUiClient by lazy {
+//        GoogleAuthUiClient(applicationContext, Identity.getSignInClient(applicationContext))
+//    }
 
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -73,10 +73,10 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-
+    //    scheduleSync()
         setContent {
             commonViewModel = ViewModelProvider(this)[CommonViewModel::class.java]
-            auth = Firebase.auth
+//            auth = Firebase.auth
             val isDarkTheme by commonViewModel.isDarkTheme.collectAsState()
 
 
@@ -171,47 +171,31 @@ class MainActivity : ComponentActivity() {
                 "SettingScreen"
             ) {
                 val state by commonViewModel.state.collectAsStateWithLifecycle()
-                val launcher =
-                    rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.StartIntentSenderForResult(),
-                        onResult = { result ->
-                            if (result.resultCode == Activity.RESULT_OK) {
-
-//                            lifecycleScope.launch {  }
-                                lifecycleScope.launch {
-                                    val signInResult = googleAuthUiClient.signInWithIntent(
-                                        intent = result.data ?: return@launch
-                                    )
-                                    scheduleSync()
-
-
-                                    commonViewModel.onSignInResult(signInResult)
-                                }
-
-                            }
-                        })
+//                val launcher =
+//                    rememberLauncherForActivityResult(
+//                        contract = ActivityResultContracts.StartIntentSenderForResult(),
+//                        onResult = { result ->
+//                            if (result.resultCode == Activity.RESULT_OK) {
+//
+////                            lifecycleScope.launch {  }
+//                                lifecycleScope.launch {
+//                                    val signInResult = googleAuthUiClient.signInWithIntent(
+//                                        intent = result.data ?: return@launch
+//                                    )
+////                                    scheduleSync()
+//
+//
+//                                    commonViewModel.onSignInResult(signInResult)
+//                                }
+//
+//                            }
+//                        })
                 SettingScreen(
                     navController,
                     commonViewModel,
-                    googleAuthUiClient.getSignedInUser(),
-                    {
-                        //Todo
-                        lifecycleScope.launch {
-                            googleAuthUiClient.signIn()?.let {
-                                launcher.launch(
-                                    IntentSenderRequest.Builder(it).build()
-                                )
-                            }
+                    )
 
 
-                        }
-                    }) {
-                    lifecycleScope.launch {
-                        googleAuthUiClient.signOut()
-                        navController.popBackStack()
-
-                    }
-                }
             }
             composable(
                 "AddWordScreen"
@@ -238,26 +222,7 @@ class MainActivity : ComponentActivity() {
 
     }
 
-    fun scheduleSync() {
 
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresCharging(false)
-            .build()
-
-        val data = Data.Builder().putString("User_id", googleAuthUiClient.getSignedInUser()?.userId)
-            .build()
-
-        val syncWorkRequest =
-            PeriodicWorkRequestBuilder<NetworkCallWorkManager>(1, TimeUnit.SECONDS)
-                .setConstraints(constraints)
-                .setInputData(data)
-                .build()
-
-        WorkManager.getInstance(this).enqueue(
-            syncWorkRequest
-        )
-    }
 
 
 }

@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.android.gms.auth.api.identity.Identity
+import com.mywordsbook.core.network.GoogleAuthUiClient
 import com.mywordsbook.db.Word
 import com.mywordsbook.db.WordDatabase
 import dagger.Module
@@ -87,4 +89,9 @@ object RepositoryModule {
         }
 
     }
+
+    @Singleton
+    @Provides
+    fun getGoogleClient(@ApplicationContext context: Context) =
+        GoogleAuthUiClient(context, Identity.getSignInClient(context))
 }
