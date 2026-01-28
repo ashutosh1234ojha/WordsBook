@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mywordsbook.core.viewmodel.CommonViewModel
 import com.mywordsbook.core.ui.Header
 import com.mywordsbook.R
@@ -69,6 +71,7 @@ fun SettingScreen(
                     // coroutineScope.launch {
                     settingViewModel.googleLogin(result)
                     // }
+
 
 
                     settingViewModel.scheduleSync(context)
@@ -204,3 +207,5 @@ fun SettingScreen(
 
     }
 }
+
+

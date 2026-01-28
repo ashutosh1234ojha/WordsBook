@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 data class WordBackend(
-    var wording: String,
-    var meaning: String,
+    var wording: String="",
+    var meaning: String="",
     var id: Int = 0,
     var isImportant: Boolean = false,
-    var createdDateTime: String,
+    var createdDateTime: String="",
 )
